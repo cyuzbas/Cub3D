@@ -6,7 +6,7 @@
 /*   By: cyuzbas <cyuzbas@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/21 20:10:02 by cyuzbas       #+#    #+#                 */
-/*   Updated: 2022/11/08 15:58:59 by cyuzbas       ########   odam.nl         */
+/*   Updated: 2023/03/02 16:45:13 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void		*ft_memchr(const void *s, int c, size_t n);
 int			ft_memcmp(const void *s1, const void *s2, size_t n);
 void		*ft_memcpy(void *dest, const void *src, size_t n);
 void		*ft_memmove(void *dest, const void *src, size_t len);
-void		*ft_memset(void *s, char c, size_t len);
+void		*ft_memset(void *b, uint32_t c, size_t len);
 void		ft_putchar_fd(char c, int fd);
 void		ft_putendl_fd(char *s, int fd);
 void		ft_putnbr_fd(int n, int fd);
