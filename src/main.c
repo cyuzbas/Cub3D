@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "../lib/libft/libft.h"
 #include <stdlib.h>
+#include <math.h>
 
 #include <memory.h>
 #include "../lib/MLX42/include/MLX42/MLX42.h"
@@ -50,6 +51,53 @@ void create_block(mlx_image_t* bckrnd, int wall_x, int wall_y, int color)
 	}
 }
 
+// void draw_angle(t_vars *data, double angle, int line_lenght, long color)
+// {
+//     double x1;
+//     double y1;
+
+//     for(int i = 0; i < line_lenght; i += 1)
+//     {
+//         x1 = (i * cos(angle)) + data->player.x + 1;
+//         y1 = (i * sin(angle)) + data->player.y + 1;
+// 		// printf("x %d y %d ,angel value = %f, y value = %f\n",data->player.x, data->player.y ,data->player.d_x, data->player.d_y);	
+//         if (x1 < data->map_info.len * 50 && x1 > 0  && y1 < data->map_info.line * 50 && y1 > 0)
+//             my_mlx_pixel_put(&data->background, x1, y1, color);
+//     }
+//     // printf("x value = %d, y value = %d\n", x1, y1);
+// }
+
+// void create_player(t_vars *vars, int player_x, int player_y)
+// {
+
+// 	int x = player_x;
+// 	int y = player_y;
+// 	printf("player x %d y %d\n",player_x,player_y);
+	
+// 	while (player_x > x - 3)
+// 	{
+// 		y = player_y;
+// 		while (y - 3 < player_y)
+// 		{
+// 			my_mlx_pixel_put(&vars->background, x, y, 0X000000);
+// 			y++;
+// 		}
+// 		x++;
+// 	}
+    
+// 	int a = 0;
+// 	for (double i = -0.3; i < 0.3; i+=0.01)
+// 	{
+	
+// 		vars->player.ray[a] = draw_ray(vars, vars->player.pa + i, 0XFF0000);
+// 		a++;
+// 	}
+// 	// draw_ray(vars, vars->player.pa, 0XFF0000);
+// 	draw_angle(vars, vars->player.pa , 8, 0X000000);
+
+
+// }
+
 void walls(mlx_image_t* bckrnd, t_map map, mlx_t* mlx, mlx_image_t* player)
 {
 	int x = 0;
@@ -72,18 +120,21 @@ void walls(mlx_image_t* bckrnd, t_map map, mlx_t* mlx, mlx_image_t* player)
 				mlx_image_to_window(mlx, player, (y*50)+23, (x*50)+23);
 			// 	if (where == 0)
 			// 	{				
-			// 		vars->player.y = 200;
-			// 		vars->player.x =200 ;
+					// vars->player.y = 200;
+					// vars->player.x =200 ;
 				
-			// 		vars->player.pa = 2 * M_PI;
-			// 		vars->player.d_x = lround((cos(vars->player.pa)));
-			// 		vars->player.d_y = lround((sin(vars->player.pa)));
-			// 		printf("dx %f dy %f\n",vars->player.d_x, vars->player.d_y);
+					// vars->player.pa = 2 * M_PI;
+					// vars->player.d_x = lround((cos(vars->player.pa)));
+					// vars->player.d_y = lround((sin(vars->player.pa)));
+					// printf("dx %f dy %f\n",vars->player.d_x, vars->player.d_y);
 			// 		// printf("x %d y %d ,angel value = %f, y value = %f\n",vars->player.x, vars->player.y ,vars->player.d_x, vars->player.d_y);
 				}
 			y++;
 		}
 		x++;
+		// create_player(vars, (int) vars->player.x, (int) vars->player.y);
+		// mlx_put_image_to_window(vars->mlx, vars->win,
+		// vars->background.img_ptr, 0, 0);
 	}
 	
 }
