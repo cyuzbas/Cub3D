@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   main.c                                             :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: cyuzbas <cyuzbas@student.codam.nl>           +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/03/07 16:35:45 by cyuzbas       #+#    #+#                 */
+/*   Updated: 2023/03/07 22:00:32 by cyuzbas       ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include "../lib/libft/libft.h"
 #include <stdlib.h>
@@ -6,15 +18,28 @@
 #include <memory.h>
 #include "../lib/MLX42/include/MLX42/MLX42.h"
 
-static mlx_image_t* bckrnd;
+static mlx_image_t* map2D;
 static mlx_image_t* player;
+#define PI 3.1415926535
 
 typedef struct s_map
 {
+	int		ratio;
 	int		line;
 	int		len;
 	char	**maps;
+
+	int		px;			//player position
+	int		py;
+	float	pdx;		//player delta 
+	float	pdy;
+	float	pangle; 	//player angle
+
+	int		x;			//current position
+	int		y;
 }			t_map;
+
+
 
 void hook(void* param)
 {
@@ -22,32 +47,40 @@ void hook(void* param)
 
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(mlx);
-	if (mlx_is_key_down(mlx, MLX_KEY_UP))
+	if (mlx_is_key_down(mlx, MLX_KEY_W))
 		player->instances[0].y -= 5;
-	if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
+	if (mlx_is_key_down(mlx, MLX_KEY_S))
 		player->instances[0].y += 5;
-	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
+	if (mlx_is_key_down(mlx, MLX_KEY_A))
 		player->instances[0].x -= 5;
-	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
+	if (mlx_is_key_down(mlx, MLX_KEY_D))
 		player->instances[0].x += 5;
-		
-}
 
-void create_block(mlx_image_t* bckrnd, int wall_x, int wall_y, int color)
-{
-	int x = wall_x * 50;
-	int y = wall_y * 50;
-	
-
-	while (x < (wall_x * 50) + 49)
+	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
 	{
-		y = wall_y * 50;
-		while (y < (wall_y * 50) + 49 )
-		{
-			mlx_put_pixel(bckrnd, x, y, color);
-			y++;
-		}
-		x++;
+		player->instances[0].angle -= 0.1;
+		if (player->instances[0].angle < 0)
+			player->instances[0].angle += 2 * PI;
+		player->instances[0].dx = cos(player->instances[0].angle * 5);
+		player->instances[0].dy = sin(player->instances[0].angle * 5);
+	}
+	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
+	{
+		player->instances[0].angle += 0.1;
+		if (player->instances[0].angle > 2 * PI)
+			player->instances[0].angle -= 2 * PI;
+		player->instances[0].dx = cos(player->instances[0].angle * 5);
+		player->instances[0].dy = sin(player->instances[0].angle * 5);
+	}
+	if (mlx_is_key_down(mlx, MLX_KEY_UP))
+	{
+		player->instances[0].x += player->instances[0].dx;
+		player->instances[0].y += player->instances[0].dy;
+	}
+	if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
+	{
+		player->instances[0].x -= player->instances[0].dx;
+		player->instances[0].y -= player->instances[0].dy;
 	}
 }
 
@@ -98,26 +131,101 @@ void create_block(mlx_image_t* bckrnd, int wall_x, int wall_y, int color)
 
 // }
 
-void walls(mlx_image_t* bckrnd, t_map map, mlx_t* mlx, mlx_image_t* player)
-{
-	int x = 0;
-	int y = 0;
+// void draw_player1(mlx_t* mlx, mlx_image_t* player, t_map map)
+// {
+// 	int x;
+// 	int y = 0;
+// 	int size = 4;
+// 	int a = 0;
+// 	int b = 0;
+// 	while (map.maps[a])
+// 	{
+// 		b = 0;
+// 		while (map.maps[a][b])
+// 		{
+// 			if(map.maps[a][b] == 'P')
+// 			{
+// 				while (y < size)
+// 				{
+// 					x = 0;
+// 					while (x < size)
+// 					{
+// 						mlx_put_pixel(player, y, x, 0XFFFF00FF);
+// 						x++;
+// 					}
+// 					y++;
+// 				}
+// 				y = (b*map.ratio)+(map.ratio-size)/2;
+// 				x = (a*map.ratio)+(map.ratio-size)/2;
+// 				mlx_image_to_window(mlx, player, y, x);
+// 				break;
+// 			}
+// 			b++;
+// 		}
+// 		a++;
+// 	}
+// }
 
-	while (map.maps[x])
+void draw_player(mlx_t* mlx, mlx_image_t* player, t_map map)
+{
+	int x;
+	int y = 0;
+	// int size = 5;
+
+	while (y < 3)
 	{
-		y = 0;
-		while (map.maps[x][y])
+		x = 0;
+		while (x < 7)
 		{
-			if (map.maps[x][y] == '0')
-				create_block(bckrnd, y, x, 0X99999999);
-			else if (map.maps[x][y] == '1')
+			mlx_put_pixel(player, y, x, 0XFFFF00FF);
+			x++;
+		}
+		y++;
+	}
+	
+	y = (map.y*map.ratio)+(map.ratio-3)/2;
+	x = (map.x*map.ratio)+(map.ratio-7)/2;
+	mlx_image_to_window(mlx, player, y, x);
+
+}
+
+void create_block(mlx_image_t* bckrnd, t_map map, int color)
+{
+	int x = map.x * map.ratio;
+	int y = map.y * map.ratio;
+	
+
+	while (y < (map.y * map.ratio) + (map.ratio - 1))
+	{
+		x = map.x * map.ratio;
+		while (x < (map.x * map.ratio) + (map.ratio - 1) )
+		{
+			mlx_put_pixel(bckrnd, y, x, color);
+			x++;
+		}
+		y++;
+	}
+}
+
+void draw_2D_map(mlx_image_t* bckrnd, t_map map, mlx_t* mlx, mlx_image_t* player)
+{
+	map.x = 0;
+	while (map.maps[map.x])
+	{
+		map.y = 0;
+		while (map.maps[map.x][map.y])
+		{
+			if (map.maps[map.x][map.y] == '0')
+				create_block(bckrnd, map, 0X00000055);
+			else if (map.maps[map.x][map.y] == '1')
 			{
-				create_block(bckrnd, y, x, 0X320130);
+				create_block(bckrnd, map, 0XFFFFFF99);
 			}
-			else if (map.maps[x][y] == 'P' )
+			else if (map.maps[map.x][map.y] == 'P' )
 			{
-				create_block(bckrnd, y, x, 0X99999999);
-				mlx_image_to_window(mlx, player, (y*50)+23, (x*50)+23);
+				create_block(bckrnd, map, 0X00000055);
+				draw_player(mlx, player, map);
+				// mlx_image_to_window(mlx, player, (y*map.ratio)+(map.ratio-4)/2, (x*map.ratio)+(map.ratio-4)/2);
 			// 	if (where == 0)
 			// 	{				
 					// vars->player.y = 200;
@@ -129,9 +237,9 @@ void walls(mlx_image_t* bckrnd, t_map map, mlx_t* mlx, mlx_image_t* player)
 					// printf("dx %f dy %f\n",vars->player.d_x, vars->player.d_y);
 			// 		// printf("x %d y %d ,angel value = %f, y value = %f\n",vars->player.x, vars->player.y ,vars->player.d_x, vars->player.d_y);
 				}
-			y++;
+			map.y++;
 		}
-		x++;
+		map.x++;
 		// create_player(vars, (int) vars->player.x, (int) vars->player.y);
 		// mlx_put_image_to_window(vars->mlx, vars->win,
 		// vars->background.img_ptr, 0, 0);
@@ -145,6 +253,7 @@ int	main(void)
 	mlx_t* mlx;
 	t_map map;
 
+	map.ratio = 64;
 	map.len = 15;
 	map.line = 8;
 	map.maps = malloc(sizeof(char**) * map.line + 1);
@@ -168,17 +277,18 @@ int	main(void)
 	map.maps[8] = NULL;
 
 
-	if (!(mlx = mlx_init(map.len*50, map.line*50, "CUB3D", true)))
+	if (!(mlx = mlx_init(map.len * map.ratio, map.line * map.ratio, "CUB3D", true)))
 		return(EXIT_FAILURE);
 
-	player = mlx_new_image(mlx, 4, 4);
-	bckrnd = mlx_new_image(mlx, map.len*50, map.line*50);
+	player = mlx_new_image(mlx, 3, 7);
+	map2D = mlx_new_image(mlx, map.len * map.ratio, map.line * map.ratio);
 
-	ft_memset(player->pixels,  255 , player->width * player->height * sizeof(int));
-	walls(bckrnd, map, mlx, player);
+	// draw_player1(mlx, player, map);
+	draw_2D_map(map2D, map, mlx, player);
+	// ft_memset(player->pixels,  255 , player->width * player->height * sizeof(int));
 
 	// mlx_image_to_window(mlx, player, 320 , 170);
-	mlx_image_to_window(mlx, bckrnd, 0, 0);
+	mlx_image_to_window(mlx, map2D, 0, 0);
 
 	mlx_loop_hook(mlx, &hook, mlx);
 	mlx_loop(mlx);

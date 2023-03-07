@@ -6,7 +6,7 @@
 /*   By: W2Wizard <main@w2wizard.dev>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/28 00:33:01 by W2Wizard      #+#    #+#                 */
-/*   Updated: 2023/02/01 11:33:26 by W2Wizard      ########   odam.nl         */
+/*   Updated: 2023/03/07 16:31:27 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,9 @@ typedef struct mlx_instance
 	int32_t	x;
 	int32_t	y;
 	int32_t	z;
+	float	dx;		//delta radian 
+	float	dy;
+	float	angle;
 	bool	enabled;
 }	mlx_instance_t;
 
