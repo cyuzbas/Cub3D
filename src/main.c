@@ -6,7 +6,7 @@
 /*   By: cyuzbas <cyuzbas@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/07 16:35:45 by cyuzbas       #+#    #+#                 */
-/*   Updated: 2023/03/07 22:00:32 by cyuzbas       ########   odam.nl         */
+/*   Updated: 2023/03/08 13:22:48 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,16 +166,33 @@ void hook(void* param)
 // 	}
 // }
 
+void draw_direction(mlx_image_t* player, t_map map, int x, int y)
+{
+	double x1;
+    double y1;
+
+    for(int i = 0; i < 10; i++)
+    {
+        x1 = (i * cos(0.5 * M_PI)) + x;
+        y1 = (i * sin(0.5 * M_PI)) + y;
+		// printf("x %d X1 %f y %d  y1 %f i %d cos %d sin %d\n",x,x1,y,y1,i, (int)cos(2 * M_PI) , (int)sin(2 * M_PI));
+		// printf("x %d y %d ,angel value = %f, y value = %f\n",data->player.x, data->player.y ,data->player.d_x, data->player.d_y);	
+        if (x1 < map.len * map.ratio && x1 > 0  && y1 < map.line * map.ratio && y1 > 0)
+            {mlx_put_pixel(player, x1, y1, 0XFF00FFFF);
+			printf("inside\n");}
+    }
+}
+
 void draw_player(mlx_t* mlx, mlx_image_t* player, t_map map)
 {
 	int x;
 	int y = 0;
-	// int size = 5;
+	int size = 5;
 
-	while (y < 3)
+	while (y < size)
 	{
 		x = 0;
-		while (x < 7)
+		while (x < size)
 		{
 			mlx_put_pixel(player, y, x, 0XFFFF00FF);
 			x++;
@@ -183,8 +200,9 @@ void draw_player(mlx_t* mlx, mlx_image_t* player, t_map map)
 		y++;
 	}
 	
-	y = (map.y*map.ratio)+(map.ratio-3)/2;
-	x = (map.x*map.ratio)+(map.ratio-7)/2;
+	draw_direction(player, map, 2, 2);
+	y = (map.y*map.ratio)+(map.ratio-size)/2;
+	x = (map.x*map.ratio)+(map.ratio-size)/2;
 	mlx_image_to_window(mlx, player, y, x);
 
 }
@@ -280,15 +298,17 @@ int	main(void)
 	if (!(mlx = mlx_init(map.len * map.ratio, map.line * map.ratio, "CUB3D", true)))
 		return(EXIT_FAILURE);
 
-	player = mlx_new_image(mlx, 3, 7);
+	player = mlx_new_image(mlx, 15, 15);
 	map2D = mlx_new_image(mlx, map.len * map.ratio, map.line * map.ratio);
+
+
+	// mlx_image_to_window(mlx, player, 320 , 170);
+	mlx_image_to_window(mlx, map2D, 0, 0);
 
 	// draw_player1(mlx, player, map);
 	draw_2D_map(map2D, map, mlx, player);
 	// ft_memset(player->pixels,  255 , player->width * player->height * sizeof(int));
 
-	// mlx_image_to_window(mlx, player, 320 , 170);
-	mlx_image_to_window(mlx, map2D, 0, 0);
 
 	mlx_loop_hook(mlx, &hook, mlx);
 	mlx_loop(mlx);
