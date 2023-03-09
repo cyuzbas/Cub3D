@@ -6,7 +6,7 @@
 /*   By: cyuzbas <cyuzbas@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 16:11:03 by cyuzbas       #+#    #+#                 */
-/*   Updated: 2023/03/09 12:27:39 by cyuzbas       ########   odam.nl         */
+/*   Updated: 2023/03/09 14:47:18 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@
 #include "../lib/MLX42/include/MLX42/MLX42.h"
 #include "cub3d.h"
 
+void draw_2D_map(t_vars *vars);
 void draw_player(t_vars* vars, t_map map);
 void draw_direction(t_vars *vars, double angle, int x, int y);
+
 t_map	fill_map(t_map map)
 {
 	map.ratio = 64;
@@ -49,20 +51,6 @@ t_map	fill_map(t_map map)
 }
 
 
-// void clean_maps(t_vars *vars)
-// {
-//     if (vars->player.)
-// 	{
-// 	mlx_destroy_image(vars->mlx, vars->background.img_ptr);
-// 	}
-// 			vars->background.img_ptr = mlx_new_image(vars->mlx, vars->map_info.len * 50, vars->map_info.line * 50);
-// 	vars->background.address = mlx_get_data_addr(vars->background.img_ptr,
-// 			&vars->background.bits_per_pixel,
-// 			&vars->background.line_size, &vars->background.endian);
-// }
-
-
-
 void hook(void* param)
 {
 	t_vars* vars = param;
@@ -83,11 +71,8 @@ void hook(void* param)
 	if (mlx_is_key_down(mlx, MLX_KEY_D))
 		vars->player->instances[0].x += 5;
 		
-		
-	// clean_player(vars);
-	// vars->player->enabled = false;
-	// mlx_delete_image(mlx, vars->player);
-
+	// ft_memset(vars->map2D->pixels,  255 , vars->map2D->width * vars->map2D->height * sizeof(int));
+	ft_memset(vars->player->pixels,  0 , vars->player->width * vars->player->height * sizeof(int));
 	
 	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
 	{
@@ -116,10 +101,8 @@ void hook(void* param)
 		vars->player->instances[0].x -= vars->p.pdx;
 		vars->player->instances[0].y -= vars->p.pdy;
 	}
-	// draw_direction(vars, vars->p.pa, vars->p.px, vars->p.py);
-	// draw_player(vars, vars->map);
-	// mlx_image_to_window(vars->mlx, vars->player, 0, 0);
-	
+	// draw_2D_map(vars);
+	draw_player(vars, vars->map);
 }
 
 
