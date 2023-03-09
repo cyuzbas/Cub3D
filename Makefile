@@ -6,7 +6,7 @@
 #    By: cyuzbas <cyuzbas@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/26 15:00:38 by cyuzbas       #+#    #+#                  #
-#    Updated: 2023/03/08 16:59:02 by cyuzbas       ########   odam.nl          #
+#    Updated: 2023/03/09 17:52:27 by cyuzbas       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,5 +64,8 @@ fclean: clean
 	@$(MAKE) fclean -C $(LIBFT)/
 
 re: clean all
+
+run: all 
+	./cub3d
 
 .PHONY: all, clean, fclean, re, libmlx, libft

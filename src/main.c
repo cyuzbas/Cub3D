@@ -6,7 +6,7 @@
 /*   By: cyuzbas <cyuzbas@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 16:11:03 by cyuzbas       #+#    #+#                 */
-/*   Updated: 2023/03/09 17:45:30 by cyuzbas       ########   odam.nl         */
+/*   Updated: 2023/03/09 18:22:24 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ void hook(void* param)
 	// ft_memset(vars->map2D->pixels,  255 , vars->map2D->width * vars->map2D->height * sizeof(int));
 	// ft_memset(vars->player->pixels,  0 , vars->player->width * vars->player->height * sizeof(int));
 	ft_memset(vars->img->pixels,  0, vars->img->width * vars->img->height * sizeof(int));
+	// free(vars->img);
+	// vars->img = mlx_new_image(vars->mlx, vars->width, vars->height);
 	
 	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
 	{
@@ -109,7 +111,6 @@ void hook(void* param)
 		
 	}
 	draw_2D_map(vars,1);
-	// draw_player(vars, vars->map);
 }
 
 
@@ -122,9 +123,7 @@ void draw_direction(t_vars *vars, double angle, int size)
     for(int i = 0; i < size; i++)
     {
         x1 = (i * cos((angle))) + vars->p.py + 1;
-        y1 = (i * sin((angle))) + vars->p.px + 1;
-		// printf("x %d X1 %f y %d  y1 %f i %d cos %d sin %d\n",x,x1,y,y1,i, (int)cos(2 * M_PI) , (int)sin(2 * M_PI));
-		// printf("x %d y %d ,angel value = %f, y value = %f\n",data->player.x, data->player.y ,data->player.d_x, data->player.d_y);	
+        y1 = (i * sin((angle))) + vars->p.px + 1;	
         if (x1 < map.len * map.ratio && x1 > 0  && y1 < map.line * map.ratio && y1 > 0)
             mlx_put_pixel(vars->img, x1, y1, 0XFF00FFFF);
     }
@@ -133,20 +132,7 @@ void draw_direction(t_vars *vars, double angle, int size)
 void draw_player(t_vars* vars, t_map map)
 {
 	int size = 3;
-	// int x;
-	// int y = vars->p.py - size;
-
-	// while (y < vars->p.py + size)
-	// {
-	// 	x = vars->p.px - size;
-	// 	while (x < vars->p.px + size)
-	// 	{
-	// 		mlx_put_pixel(vars->img, y, x, 0XFFFF00FF);
-	// 		x++;
-	// 	}
-	// 	y++;
-	// }
-	// draw_direction(vars, vars->p.pa, y-size, x-size);
+	
 
 	int x = (int)vars->p.px;
 	int y = (int)vars->p.py;
@@ -167,56 +153,54 @@ void draw_player(t_vars* vars, t_map map)
 
 void draw_block(mlx_image_t* map2D, t_map map, int color)
 {
-	int x = map.mx * map.ratio;
-	int y = map.my * map.ratio;
+	int y = map.mx * map.ratio;
+	int x = map.my * map.ratio;
 	
 
-	while (y < (map.my * map.ratio) + (map.ratio - 1))
+	while (x < (map.my * map.ratio) + (map.ratio - 1))
 	{
-		x = map.mx * map.ratio;
-		while (x < (map.mx * map.ratio) + (map.ratio - 1) )
+		y = map.mx * map.ratio;
+		while (y < (map.mx * map.ratio) + (map.ratio - 1) )
 		{
-			mlx_put_pixel(map2D, y, x, color);
-			x++;
+			mlx_put_pixel(map2D, x, y, color);
+			y++;
 		}
-		y++;
+		x++;
 	}
 }
 
 void draw_2D_map(t_vars *vars, int flag)
 {
-	// t_map m;
+	t_map m;
 
-	// m = vars->map
-	vars->map.mx = 0;
-	while (vars->map.maps[vars->map.mx])
+	m = vars->map;
+	m.mx = 0;
+	while (m.maps[m.mx])
 	{
-		vars->map.my = 0;
-		while (vars->map.maps[vars->map.mx][vars->map.my])
+		m.my = 0;
+		while (m.maps[m.mx][m.my])
 		{
-			if (vars->map.maps[vars->map.mx][vars->map.my] == '0')
-				draw_block(vars->img, vars->map, 0X000000FF);
-			else if (vars->map.maps[vars->map.mx][vars->map.my] == '1')
-				draw_block(vars->img, vars->map, 0XFFFFFFFF);
-			else if (vars->map.maps[vars->map.mx][vars->map.my] == 'P' )
+			if (m.maps[m.mx][m.my] == '0')
+				draw_block(vars->img, m, 0X000000FF);
+			else if (m.maps[m.mx][m.my] == '1')
+				draw_block(vars->img, m, 0XFFFFFFFF);
+			else if (m.maps[m.mx][m.my] == 'P' )
 			{
-				draw_block(vars->img, vars->map, 0X000000FF);
+				draw_block(vars->img, m, 0X000000FF);
 				if (flag == 0)
 				{
-					vars->p.px = (vars->map.mx * vars->map.ratio) + (vars->map.ratio / 2); //160
-					vars->p.py = (vars->map.my * vars->map.ratio) + (vars->map.ratio / 2); //352
+					vars->p.px = (m.mx * m.ratio) + 25; //352
+					vars->p.py = (m.my * m.ratio) + 25; //160
 					vars->p.pa = 2 * M_PI;
 					vars->p.pdx = lround((cos(vars->p.pa)));
 					vars->p.pdy = lround((sin(vars->p.pa)));
 				}
 			}
-			vars->map.my++;
+			m.my++;
 		}
-		vars->map.mx++;
+		m.mx++;
 	}
-	// mlx_image_to_window(vars->mlx, vars->map2D, 0, 0);
-	// mlx_image_to_window(vars->mlx, vars->player, 0, 0);
-	draw_player(vars, vars->map);
+	draw_player(vars, m);
 	mlx_image_to_window(vars->mlx, vars->img, 0, 0);
 }
 
@@ -232,11 +216,8 @@ int	main(void)
 		exit(EXIT_FAILURE);
 	
 	vars.img = mlx_new_image(vars.mlx, vars.width, vars.height);
-	// vars.player = mlx_new_image(vars.mlx, vars.width, vars.height);
-	// vars.map2D = mlx_new_image(vars.mlx, vars.width, vars.height);
 
 	draw_2D_map(&vars, 0);
-	// mlx_image_to_window(vars.mlx, vars.img, 0, 0);
 	
 	mlx_loop_hook(vars.mlx, &hook, &vars);
 	mlx_loop(vars.mlx);
