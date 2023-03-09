@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   cub3d.h                                            :+:    :+:            */
+/*   utils.c                                            :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: cyuzbas <cyuzbas@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/03/08 16:03:43 by cyuzbas       #+#    #+#                 */
-/*   Updated: 2023/03/09 16:44:14 by cyuzbas       ########   odam.nl         */
+/*   Created: 2023/03/08 16:31:23 by cyuzbas       #+#    #+#                 */
+/*   Updated: 2023/03/08 16:31:33 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,36 +17,4 @@
 
 #include <memory.h>
 #include "../lib/MLX42/include/MLX42/MLX42.h"
-
-typedef struct s_player
-{
-	double		px;			//player position
-	double		py;
-	double	pdx;		//player delta 
-	double	pdy;
-	double	pa; 	//player angle
-	
-	int		ray[60];
-}			t_player;
-
-
-typedef struct s_map
-{
-	int		ratio;
-	int		line;
-	int		len;
-	char	**maps;
-
-	int		mx;			//current map position
-	int		my;
-}			t_map;
-
-typedef struct s_vars
-{
-	mlx_image_t*	img;
-	mlx_t*			mlx;
-	t_player		p;
-	t_map			map;
-	int				width;
-	int				height;
-}			t_vars;
+#include "cub3d.h"
