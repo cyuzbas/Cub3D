@@ -6,7 +6,7 @@
 /*   By: cyuzbas <cyuzbas@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 16:03:43 by cyuzbas       #+#    #+#                 */
-/*   Updated: 2023/03/09 16:44:14 by cyuzbas       ########   odam.nl         */
+/*   Updated: 2023/03/09 18:34:11 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,12 @@
 
 typedef struct s_player
 {
-	double		px;			//player position
-	double		py;
+	double	px;			//player position
+	double	py;
 	double	pdx;		//player delta 
 	double	pdy;
-	double	pa; 	//player angle
-	
-	int		ray[60];
+	double	pa; 		//player angle
+	int		ray[60];	//ray between -30/30 degrees
 }			t_player;
 
 
@@ -50,3 +49,8 @@ typedef struct s_vars
 	int				width;
 	int				height;
 }			t_vars;
+
+
+void draw_2D_map(t_vars *vars, int flag);
+void draw_player(t_vars* vars, t_map map);
+void draw_direction(t_vars *vars, double angle, int size);
