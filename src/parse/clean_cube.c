@@ -6,15 +6,16 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 14:42:51 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/13 15:40:58 by hwang         ########   odam.nl         */
+/*   Updated: 2023/03/13 16:34:05 by hwang         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub3d.h"
 
-void free_double_array(char **array)
+void	free_double_array(char **array)
 {
-	int i;
+	int	i;
+
 	i = 0;
 	while (array[i])
 	{
@@ -24,7 +25,7 @@ void free_double_array(char **array)
 	free(array);
 }
 
-void clean_map(t_map *map)
+void	clean_map(t_map *map)
 {
 	if (map->raw_map)
 		free(map->raw_map);
@@ -36,7 +37,7 @@ void clean_map(t_map *map)
 	return ;
 }
 
-void clean_textures(t_texture *texture)
+void	clean_textures(t_texture *texture)
 {
 	if (texture->no_tex)
 		free(texture->no_tex);
@@ -54,7 +55,7 @@ void clean_textures(t_texture *texture)
 	return ;
 }
 
-void clean_cube(t_cube *cube)
+void	clean_cube(t_cube *cube)
 {
 	if (cube)
 	{
