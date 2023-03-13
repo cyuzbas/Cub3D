@@ -6,7 +6,7 @@
 /*   By: cyuzbas <cyuzbas@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 16:11:03 by cyuzbas       #+#    #+#                 */
-/*   Updated: 2023/03/09 19:05:04 by cyuzbas       ########   odam.nl         */
+/*   Updated: 2023/03/13 15:38:22 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,37 +19,9 @@
 #include "../lib/MLX42/include/MLX42/MLX42.h"
 #include "cub3d.h"
 
-t_map	fill_map(t_map map)
-{
-	map.ratio = 50;
-	map.len = 15;
-	map.line = 8;
-	map.maps = malloc(sizeof(char**) * map.line + 1);
-	map.maps[0] = malloc(sizeof(char *) * map.len + 1);
-	map.maps[1] = malloc(sizeof(char *) * map.len + 1);
-	map.maps[2] = malloc(sizeof(char *) * map.len + 1);
-	map.maps[3] = malloc(sizeof(char *) * map.len + 1);
-	map.maps[4] = malloc(sizeof(char *) * map.len + 1);
-	map.maps[5] = malloc(sizeof(char *) * map.len + 1);
-	map.maps[6] = malloc(sizeof(char *) * map.len + 1);
-	map.maps[7] = malloc(sizeof(char *) * map.len + 1);
-	map.maps[8] = malloc(sizeof(char *) * map.len + 1);
-    map.maps[0] = "111111111111111";
-	map.maps[1] = "101001000001001";
-	map.maps[2] = "11010P010000101";
-    map.maps[3] = "101001000000001";
-    map.maps[4] = "101000000001001";
-    map.maps[5] = "101000001001001";
-    map.maps[6] = "101001000000001";
-	map.maps[7] = "111111111111111";
-	map.maps[8] = NULL;
-	return (map);
-}
-
-
 void hook(void* param)
 {
-	t_vars* vars = param;
+	t_cube* vars = param;
 	mlx_t* mlx = vars->mlx;
 
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
@@ -105,7 +77,7 @@ void hook(void* param)
 		// printf("after pa=%f, pdx=%f, pdy=%f\n", vars->p.pa, vars->p.px, vars->p.py);
 		
 	}
-	draw_2D_map(vars,1);
+	draw_2D_map(vars, vars->map->ratio, 1);
 }
 
 int find_ray_len(int x, int y)
@@ -118,7 +90,7 @@ int find_ray_len(int x, int y)
     return (sqrt(result));
 }
 
-int check_walls(double player_x, double player_y, t_vars *vars)
+int check_walls(double player_x, double player_y, t_cube *vars)
 {
     double wall_x;
     double wall_y;
@@ -126,12 +98,12 @@ int check_walls(double player_x, double player_y, t_vars *vars)
     wall_x = player_x / 50;
     wall_y = player_y /50;
     // printf("walls float %f int %d float %f int %d [%c]\n",wall_x, (int) wall_x,wall_y, (int)wall_y ,vars->map_info.maps[(int)wall_y][(int)wall_x]);
-    if (vars->map.maps[(int)wall_y][(int)wall_x] == '1')
+    if (vars->map->map_data[(int)wall_y][(int)wall_x] == '1')
         return (0);
     return (1);    
 }
 
-int draw_ray(t_vars *data, double angle, long color)
+int draw_ray(t_cube *data, double angle, long color)
 {
     double x1;
     double y1;
@@ -148,7 +120,7 @@ int draw_ray(t_vars *data, double angle, long color)
         y1 = (i * sin(angle)) + data->p.px + 1;
 		// printf("x %d y %d ,angel value = %f, y value = %f\n",data->player.x, data->player.y ,data->player.d_x, data->player.d_y);	
         // printf("x1 %d y1 %d\n",x1,y1);
-		if (x1 < data->map.len * 50 && x1 > 0  && y1 < data->map.line * 50 && y1 > 0)
+		if (x1 < data->map->col * 50 && x1 > 0  && y1 < data->map->row * 50 && y1 > 0)
 		{
 			if (check_walls(x1, y1, data))
 			{
@@ -170,21 +142,21 @@ int draw_ray(t_vars *data, double angle, long color)
 	return (len);
 }
 
-void draw_direction(t_vars *vars, double angle, int size)
+void draw_direction(t_cube *vars, double angle, int size)
 {
-	t_map map = vars->map;
+	t_map *map = vars->map;
 	double x1;
     double y1;
     for(int i = 0; i < size; i++)
     {
         x1 = (i * cos((angle))) + vars->p.py + 1;
         y1 = (i * sin((angle))) + vars->p.px + 1;	
-        if (x1 < map.len * map.ratio && x1 > 0  && y1 < map.line * map.ratio && y1 > 0)
+        if (x1 < map->col * map->ratio && x1 > 0  && y1 < map->row * map->ratio && y1 > 0)
             mlx_put_pixel(vars->img, x1, y1, 0XFF00FFFF);
     }
 }
 
-void draw_player(t_vars* vars, t_map map)
+void draw_player(t_cube* vars)
 {
 	int size = 3;
 
@@ -212,16 +184,16 @@ void draw_player(t_vars* vars, t_map map)
 	draw_direction(vars, vars->p.pa, 10);
 }
 
-void draw_block(mlx_image_t* map2D, t_map map, int color)
+void draw_block(mlx_image_t* map2D, t_position *m, int r, int color)
 {
-	int y = map.mx * map.ratio;
-	int x = map.my * map.ratio;
+	int y = m->x * r;
+	int x = m->y * r;
 	
 
-	while (x < (map.my * map.ratio) + (map.ratio - 1))
+	while (x < (m->y * r) + (r - 1))
 	{
-		y = map.mx * map.ratio;
-		while (y < (map.mx * map.ratio) + (map.ratio - 1) )
+		y = m->x * r;
+		while (y < (m->x * r) + (r - 1) )
 		{
 			mlx_put_pixel(map2D, x, y, color);
 			y++;
@@ -230,54 +202,91 @@ void draw_block(mlx_image_t* map2D, t_map map, int color)
 	}
 }
 
-void draw_2D_map(t_vars *vars, int flag)
+void draw_2D_map(t_cube *vars, int r, int flag)
 {
-	t_map m;
+	t_position *m;
 
-	m = vars->map;
-	m.mx = 0;
-	while (m.maps[m.mx])
+	m = vars->map->start_pos;
+	m->x = 0;
+	while (vars->map->map_data[m->x])
 	{
-		m.my = 0;
-		while (m.maps[m.mx][m.my])
+		m->y = 0;
+		while (vars->map->map_data[m->x][m->y])
 		{
-			if (m.maps[m.mx][m.my] == '0')
-				draw_block(vars->img, m, 0X000000FF);
-			else if (m.maps[m.mx][m.my] == '1')
-				draw_block(vars->img, m, 0XFFFFFFFF);
-			else if (m.maps[m.mx][m.my] == 'P' )
+			if (vars->map->map_data[m->x][m->y] == '0')
+				draw_block(vars->img, m, r, 0X000000FF);
+			else if (vars->map->map_data[m->x][m->y] == '1')
+				draw_block(vars->img, m, r, 0XFFFFFFFF);
+			else if (vars->map->map_data[m->x][m->y] == 'N' ||
+					vars->map->map_data[m->x][m->y] == 'E' ||
+					vars->map->map_data[m->x][m->y] == 'S' ||
+					vars->map->map_data[m->x][m->y] == 'W')
 			{
-				draw_block(vars->img, m, 0X000000FF);
+				draw_block(vars->img, m, r, 0X000000FF);
 				if (flag == 0)
 				{
-					vars->p.px = (m.mx * m.ratio) + 25; //352
-					vars->p.py = (m.my * m.ratio) + 25; //160
+					vars->p.px = (m->x * r) + r / 2; 
+					vars->p.py = (m->y * r) + r / 2; 
 					vars->p.pa = 2 * M_PI;
 					vars->p.pdx = lround((cos(vars->p.pa)));
 					vars->p.pdy = lround((sin(vars->p.pa)));
 				}
 			}
-			m.my++;
+			m->y++;
 		}
-		m.mx++;
+		m->x++;
 	}
-	draw_player(vars, m);
+	// printf("player x %d y %d, flag = %d\n",(int)vars->p.px,(int)vars->p.py, flag);
+	draw_player(vars);
 	mlx_image_to_window(vars->mlx, vars->img, 0, 0);
 }
 
-int	main(void)
+int	init_draw(t_cube *cube)
 {
-	t_vars	vars;
-	
-	vars.map = fill_map(vars.map);
-	vars.width = vars.map.len * vars.map.ratio;
-	vars.height =  vars.map.line * vars.map.ratio;
-	if (!(vars.mlx = mlx_init(vars.width, vars.height, "CUB3D", false)))
+	int	r;
+
+	cube->map->ratio = 50;
+	r = cube->map->ratio;
+	cube->width = cube->map->col * cube->map->ratio;
+	cube->height =  cube->map->row * cube->map->ratio;
+	cube->mlx = mlx_init(cube->width, cube->height, "CUB3D", false);
+	if (!(cube->mlx))
 		exit(EXIT_FAILURE);
-	vars.img = mlx_new_image(vars.mlx, vars.width, vars.height);
-	draw_2D_map(&vars, 0);
-	mlx_loop_hook(vars.mlx, &hook, &vars);
-	mlx_loop(vars.mlx);
-	mlx_terminate(vars.mlx);
+	cube->img = mlx_new_image(cube->mlx, cube->width, cube->height);
+	draw_2D_map(cube, r, 0);
+	mlx_loop_hook(cube->mlx, &hook, cube);
+	mlx_loop(cube->mlx);
+	mlx_terminate(cube->mlx);
 	return (EXIT_SUCCESS);
 }
+
+int	arg_check(int argc, char **argv)
+{
+	size_t	filename_len;
+
+	if (argc != 2)
+		put_error(NULL, "Invalid number of arguments!\n");
+	filename_len = ft_strlen(argv[1]);
+	if (filename_len < 4)
+		put_error(NULL, "Invalid file name!\n");
+	if (ft_strcmp(&argv[1][filename_len - 4], ".cub") != 0)
+		put_error(NULL, "Invalid map file extension!\n");
+	return (0);
+}
+
+int	main(int argc, char **argv)
+{
+	t_cube	*cube;
+
+	arg_check(argc, argv);
+	cube = (t_cube *)malloc(sizeof(t_cube));
+	if (init_cube(cube))
+		put_error(cube, "Failed to initialize the game!\n");
+	if (parse_file(cube, argv[1]))
+		put_error(cube, "Failed to parse map file!\n");
+	if (init_draw(cube))
+		put_error(cube, "Failed to draw the game!\n");
+
+	return (0);
+}
+
