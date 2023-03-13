@@ -93,6 +93,9 @@ int		check_map(t_cube *cube);
 char	*get_next_line(int fd);
 char	*ft_strjoin2(char *s1, char *s2);
 
+/****Init****/
+int	init_cube(t_cube *cube);
+
 /****Clean****/
 void	free_double_array(char **array);
 void	put_error(t_cube *cube, char *str);

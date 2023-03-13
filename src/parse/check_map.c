@@ -6,7 +6,7 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 16:56:18 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/13 15:52:13 by hwang         ########   odam.nl         */
+/*   Updated: 2023/03/13 15:57:41 by hwang         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int check_closed(t_cube *cube, char **map, int x, int y)
 		{
 			if (i == 0 || i == row - 1 || j == 0 || j == col - 1)
 			{
-				if (map[i][j] == '0');
+				if (map[i][j] == '0')
 					return (1);
 			}
 			else
