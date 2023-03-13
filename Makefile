@@ -6,7 +6,7 @@
 #    By: cyuzbas <cyuzbas@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/26 15:00:38 by cyuzbas       #+#    #+#                  #
-#    Updated: 2023/03/13 15:34:22 by cyuzbas       ########   odam.nl          #
+#    Updated: 2023/03/13 15:42:41 by cyuzbas       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,8 +28,8 @@ UNPREFIXED_SRC	= main.c\
 OBJS = $(addprefix $(BUILD_DIR), $(UNPREFIXED_SRC:.c=.o))
 SRCS = $(addprefix $(SRC_DIR), $(UNPREFIXED_SRC))
 
-CFLAGS	= -Wextra -Wall -Werror
-# CFLAGS	= -Wextra -Wall -Werror -Wunreachable-code -fsanitize=address
+# CFLAGS	= -Wextra -Wall -Werror
+CFLAGS	= -Wextra -Wall -Werror -Wunreachable-code -fsanitize=address
 LIBMLX	= ./lib/MLX42
 LIBFT	= ./lib/libft
 
