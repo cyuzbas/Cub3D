@@ -6,7 +6,7 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/26 11:45:10 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/13 14:30:37 by hwang         ########   odam.nl         */
+/*   Updated: 2023/03/13 15:51:41 by hwang         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	get_map_info(t_cube *cube, char *line)
 		else
 			return (-1);
 	}
+	return 0;
 }
 
 /*
