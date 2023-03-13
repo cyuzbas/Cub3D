@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_strchr.c                                        :+:    :+:            */
+/*   parse_utils.c                                      :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: cyuzbas <cyuzbas@student.codam.nl>           +#+                     */
+/*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/10/13 13:11:07 by cyuzbas       #+#    #+#                 */
-/*   Updated: 2023/03/10 15:49:37 by hwang         ########   odam.nl         */
+/*   Created: 2023/03/08 14:35:17 by hwang         #+#    #+#                 */
+/*   Updated: 2023/03/10 12:19:06 by hwang         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../inc/cub3d.h"
 
-char	*ft_strchr(const char *s, int c)
+void	put_error(t_cube *cube, char *str)
 {
-	char	d;
-
-	if (!s)
-		return (0);
-	d = (char)c;
-	while (*s && *s != d)
-		s++;
-	if (*s == d)
-		return ((char *)s);
-	return (0);
+	ft_putstr_fd("Error\n", 2);
+	if (str)
+		ft_putstr_fd(str, 2);
+	// clean_cube(cube);
+	free(cube);
 }
