@@ -6,7 +6,7 @@
 #    By: cyuzbas <cyuzbas@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/26 15:00:38 by cyuzbas       #+#    #+#                  #
-#    Updated: 2023/03/02 14:51:50 by cyuzbas       ########   odam.nl          #
+#    Updated: 2023/03/13 12:58:52 by cyuzbas       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,19 +16,25 @@ SRC_DIR = src/
 BUILD_DIR = build/
 BUILD_SUBDIRS = build/parse
 
-UNPREFIXED_SRC	= main.c \
-				parse/parse.c
+UNPREFIXED_SRC	= main.c\
+				parse/parse.c\
+				parse/parse_wall.c\
+				parse/parse_colour.c\
+				parse/parse_map.c\
+				parse/parse_utils.c\
+				parse/get_next_line.c\
+				parse/init_cube.c\
 				
 OBJS = $(addprefix $(BUILD_DIR), $(UNPREFIXED_SRC:.c=.o))
 SRCS = $(addprefix $(SRC_DIR), $(UNPREFIXED_SRC))
 
-CFLAGS	= -Wextra -Wall -Werror -Wunreachable-code
+CFLAGS	= -Wextra -Wall -Werror -Wunreachable-code -fsanitize=address
 LIBMLX	= ./lib/MLX42
 LIBFT	= ./lib/libft
 
-HEADERS	= -I ./inc -I $(LIBMLX)/include 
+HEADERS	= -I ./inc -I $(LIBMLX)/include
 LIBS	= $(LIBMLX)/build/libmlx42.a -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit $(LIBFT)/libft.a
-# LIBS	= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm $(LIBFT)/libft.a
+# LIBS	= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm lib/libft/libft.a
 
 
 all: libmlx libft $(BUILD_DIR) $(NAME)
