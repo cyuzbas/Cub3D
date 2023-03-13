@@ -6,7 +6,7 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/12 20:01:29 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/12 20:14:06 by hwang         ########   odam.nl         */
+/*   Updated: 2023/03/13 15:34:31 by hwang         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	init_colour(t_colour *colour)
 {
-	colour = (t_colour *)malloc(sizeof(t_colour));
 	colour->rgb = 0;
 	colour->r = 0;
 	colour->g = 0;

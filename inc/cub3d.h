@@ -67,17 +67,6 @@ typedef struct s_map
 
 } t_map;
 
-typedef struct s_img
-{
-	void	*mlx_img;
-	int		*addr;
-	int		bpp;
-	int		line_len;
-	int		endian;
-	int		width;
-	int		height;
-} t_img;
-
 /*
 The struct of everything
 */
@@ -98,10 +87,14 @@ int parse_colour(t_cube *cube, t_colour *colour, char *line, int i);
 
 int		get_raw_map( t_cube *cube, char *line);
 int		get_map_data(t_cube *cube);
-void	put_error(t_cube *cube, char *str);
+int		check_map(t_cube *cube);
 
 /****Parse****/
 char	*get_next_line(int fd);
 char	*ft_strjoin2(char *s1, char *s2);
+
+/****Clean****/
+void	free_double_array(char **array);
+void	put_error(t_cube *cube, char *str);
 
 #endif
