@@ -6,7 +6,7 @@
 /*   By: cyuzbas <cyuzbas@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 16:11:03 by cyuzbas       #+#    #+#                 */
-/*   Updated: 2023/03/13 15:38:22 by cyuzbas       ########   odam.nl         */
+/*   Updated: 2023/03/13 18:01:56 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ void hook(void* param)
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(mlx);
 
-	// ft_memset(vars->map2D->pixels,  255 , vars->map2D->width * vars->map2D->height * sizeof(int));
-	// ft_memset(vars->player->pixels,  0 , vars->player->width * vars->player->height * sizeof(int));
 	ft_memset(vars->img->pixels,  0, vars->img->width * vars->img->height * sizeof(int));
 	// free(vars->img);
 	// vars->img = mlx_new_image(vars->mlx, vars->width, vars->height);
@@ -62,6 +60,8 @@ void hook(void* param)
 		// printf("\n UP\n--------------------\n");
 		
 		// printf("before pa=%f, pdx=%f, pdy=%f\n", vars->p.pa, vars->p.px, vars->p.py);
+		// vars->p.py -= vars->p.pdy;
+		// vars->p.px -= vars->p.pdx;
 		vars->p.py += vars->p.pdx;
 		vars->p.px += vars->p.pdy;
 		// printf("after pa=%f, pdx=%f, pdy=%f\n", vars->p.pa, vars->p.px, vars->p.py);
@@ -72,11 +72,33 @@ void hook(void* param)
 		// printf("\n DOWN\n--------------------\n");
 		
 		// printf("before pa=%f, pdx=%f, pdy=%f\n", vars->p.pa, vars->p.px, vars->p.py);
+		// vars->p.py += vars->p.pdy;
+		// vars->p.px += vars->p.pdx;
 		vars->p.py -= vars->p.pdx;
 		vars->p.px -= vars->p.pdy;
 		// printf("after pa=%f, pdx=%f, pdy=%f\n", vars->p.pa, vars->p.px, vars->p.py);
 		
 	}
+	if (mlx_is_key_down(mlx, MLX_KEY_W))
+	{
+		vars->p.py += vars->p.pdx;
+		vars->p.px += vars->p.pdy;
+	}
+	if (mlx_is_key_down(mlx, MLX_KEY_S))
+	{
+		vars->p.py -= vars->p.pdx;
+		vars->p.px -= vars->p.pdy;
+	}
+	// if (mlx_is_key_down(mlx, MLX_KEY_A))
+	// {
+	// 	vars->p.py -= vars->p.pdx;
+	// 	vars->p.px += vars->p.pdy;
+	// }
+	// if (mlx_is_key_down(mlx, MLX_KEY_D))
+	// {
+	// 	vars->p.py += vars->p.pdx;
+	// 	vars->p.px -= vars->p.pdy;
+	// }
 	draw_2D_map(vars, vars->map->ratio, 1);
 }
 
@@ -95,8 +117,8 @@ int check_walls(double player_x, double player_y, t_cube *vars)
     double wall_x;
     double wall_y;
 
-    wall_x = player_x / 50;
-    wall_y = player_y /50;
+    wall_x = player_x / vars->map->ratio;
+    wall_y = player_y / vars->map->ratio;
     // printf("walls float %f int %d float %f int %d [%c]\n",wall_x, (int) wall_x,wall_y, (int)wall_y ,vars->map_info.maps[(int)wall_y][(int)wall_x]);
     if (vars->map->map_data[(int)wall_y][(int)wall_x] == '1')
         return (0);
@@ -120,7 +142,7 @@ int draw_ray(t_cube *data, double angle, long color)
         y1 = (i * sin(angle)) + data->p.px + 1;
 		// printf("x %d y %d ,angel value = %f, y value = %f\n",data->player.x, data->player.y ,data->player.d_x, data->player.d_y);	
         // printf("x1 %d y1 %d\n",x1,y1);
-		if (x1 < data->map->col * 50 && x1 > 0  && y1 < data->map->row * 50 && y1 > 0)
+		if (x1 < data->map->col * data->map->ratio && x1 > 0  && y1 < data->map->row * data->map->ratio && y1 > 0)
 		{
 			if (check_walls(x1, y1, data))
 			{
@@ -173,7 +195,6 @@ void draw_player(t_cube* vars)
 		}
 		x++;
 	}
-
 	int a = 0;
 	for (double i = -0.3; i < 0.3; i+=0.01)
 	{
@@ -202,7 +223,27 @@ void draw_block(mlx_image_t* map2D, t_position *m, int r, int color)
 	}
 }
 
-void draw_2D_map(t_cube *vars, int r, int flag)
+void	check_direction(t_cube *vars, t_position *m, int r,int flag)
+{
+	draw_block(vars->img, m, r, 0X000000FF);
+	if (flag == 0)
+	{
+		vars->p.px = (m->x * r) + r / 2; 
+		vars->p.py = (m->y * r) + r / 2; 
+		vars->p.pdx = lround((cos(vars->p.pa)));
+		vars->p.pdy = lround((sin(vars->p.pa)));
+		if (vars->map->map_data[m->x][m->y] == 'S')
+			vars->p.pa = 0.5 * M_PI;
+		if (vars->map->map_data[m->x][m->y] == 'W')
+			vars->p.pa = M_PI;
+		if (vars->map->map_data[m->x][m->y] == 'N')
+			vars->p.pa = 1.5 * M_PI;
+		if (vars->map->map_data[m->x][m->y] == 'E')
+			vars->p.pa = 2 * M_PI;
+	}
+}
+
+void	draw_2D_map(t_cube *vars, int r, int flag)
 {
 	t_position *m;
 
@@ -217,21 +258,8 @@ void draw_2D_map(t_cube *vars, int r, int flag)
 				draw_block(vars->img, m, r, 0X000000FF);
 			else if (vars->map->map_data[m->x][m->y] == '1')
 				draw_block(vars->img, m, r, 0XFFFFFFFF);
-			else if (vars->map->map_data[m->x][m->y] == 'N' ||
-					vars->map->map_data[m->x][m->y] == 'E' ||
-					vars->map->map_data[m->x][m->y] == 'S' ||
-					vars->map->map_data[m->x][m->y] == 'W')
-			{
-				draw_block(vars->img, m, r, 0X000000FF);
-				if (flag == 0)
-				{
-					vars->p.px = (m->x * r) + r / 2; 
-					vars->p.py = (m->y * r) + r / 2; 
-					vars->p.pa = 2 * M_PI;
-					vars->p.pdx = lround((cos(vars->p.pa)));
-					vars->p.pdy = lround((sin(vars->p.pa)));
-				}
-			}
+			else if (vars->map->map_data[m->x][m->y] != ' ')
+				check_direction(vars, m, r,flag);
 			m->y++;
 		}
 		m->x++;
@@ -286,7 +314,7 @@ int	main(int argc, char **argv)
 		put_error(cube, "Failed to parse map file!\n");
 	if (init_draw(cube))
 		put_error(cube, "Failed to draw the game!\n");
-
 	return (0);
 }
 
+	// printf("x=%d, y=%d\n", cube->map->start_pos->x, cube->map->start_pos->y);

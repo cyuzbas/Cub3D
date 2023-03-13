@@ -6,7 +6,7 @@
 /*   By: cyuzbas <cyuzbas@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 16:03:43 by cyuzbas       #+#    #+#                 */
-/*   Updated: 2023/03/13 15:23:04 by cyuzbas       ########   odam.nl         */
+/*   Updated: 2023/03/13 16:51:21 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,39 +22,19 @@
 #include <fcntl.h>
 #include <errno.h>
 
+/*
+Player position, angle, delta, and amount
+of ray will be drawn between -30/30 degrees
+*/
 typedef struct s_player
 {
-	double	px;			//player position
+	double	px;
 	double	py;
-	double	pa; 		//player angle
-	double	pdx;		//player delta 
+	double	pa;
+	double	pdx;
 	double	pdy;
-	int		ray[60];	//ray between -30/30 degrees
+	int		ray[60];
 }			t_player;
-
-
-// typedef struct s_map
-// {
-// 	int		ratio;
-// 	int		line;
-// 	int		len;
-// 	char	**maps;
-
-// 	int		mx;			//current map position
-// 	int		my;
-// }			t_map;
-
-// typedef struct s_vars
-// {
-// 	mlx_image_t*	img;
-// 	mlx_t*			mlx;
-// 	t_player		p;
-// 	t_map			map;
-// 	int				width;
-// 	int				height;
-// }			t_vars;
-
-
 
 
 /*
@@ -88,7 +68,6 @@ typedef struct s_texture
 
 /*
 The start position and direction
-DO I NEED TO SAVE THE START POSITION??
 */
 typedef struct s_position
 {
