@@ -6,7 +6,7 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 15:40:10 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/12 20:21:25 by hwang         ########   odam.nl         */
+/*   Updated: 2023/03/13 12:49:25 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,11 @@ int	get_map_data(t_cube *cube)
 		i++;
 	}
 	free (temp);
+	i = 0;
+	while(i < cube->map->row)
+	{
+		printf("%s\n", map[i]);
+		i++;
+	}
 	return (0);
 }

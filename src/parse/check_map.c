@@ -6,25 +6,25 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 16:56:18 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/12 20:36:30 by hwang         ########   odam.nl         */
+/*   Updated: 2023/03/13 12:40:48 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-int check_closed(t_cube *cube)
-{
-	char **map = cube->map;
+// int check_closed(t_cube *cube)
+// {
+// 	char **map = cube->map;
 	
-	// if (x >= 0 && y >= 0 && x < row && y < col)
-	// {
-	// 	if (map[x][y] != '0')
-	// 		return ;
-	// 	if (check_neighbour(map[x][y]) == 0)
-	// 		return ;
+// 	if (x >= 0 && y >= 0 && x < row && y < col)
+// 	{
+// 		if (map[x][y] != '0')
+// 			return ;
+// 		if (check_neighbour(map[x][y]) == 0)
+// 			return ;
 		
-	// }
-}
+// 	}
+// }
 
 void find_start(t_map *map)
 {
@@ -50,5 +50,5 @@ void find_start(t_map *map)
 int check_map(t_cube *cube)
 {
 	find_start(cube->map);
-	check_closed(cube->map);
+	// check_closed(cube->map);
 }

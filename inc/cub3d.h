@@ -104,4 +104,6 @@ void	put_error(t_cube *cube, char *str);
 char	*get_next_line(int fd);
 char	*ft_strjoin2(char *s1, char *s2);
 
+int	init_cube(t_cube *cube);
+
 #endif

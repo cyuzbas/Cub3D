@@ -6,7 +6,7 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/26 11:45:10 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/12 20:27:15 by hwang         ########   odam.nl         */
+/*   Updated: 2023/03/13 12:41:48 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	get_map_info(t_cube *cube, char *line)
 		else
 			return (-1);
 	}
+	return 0;
 }
 
 /*
@@ -83,7 +84,7 @@ int	parse_file(t_cube *cube, char *file)
 	if (cube->map->start_pos->dir == 0)
 		put_error(cube, "Start point not found in map!\n");
 	get_map_data(cube);
-	if (!check_map(cube))
-		return (1);
+	// if (!check_map(cube))
+		// return (1);
 	return (0);
 }
