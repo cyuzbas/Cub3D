@@ -6,7 +6,7 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 15:22:30 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/15 15:17:29 by hwang         ########   odam.nl         */
+/*   Updated: 2023/03/15 18:14:03 by hwang         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ int	parse_wall(t_cube *cube, mlx_texture_t *tex, char *line, int i)
 	char	*path;
 	int		path_len;
 
-	if (tex != NULL)
-		put_error(cube, "Duplicate wall texture!\n");
+	// if (tex != NULL)
+	// 	put_error(cube, "Duplicate wall texture!\n");
 	i += 2;
 	i = skip_all_space(line, i);
 	path_len = 0;

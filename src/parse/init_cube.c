@@ -6,7 +6,7 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/12 20:01:29 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/15 14:02:19 by hwang         ########   odam.nl         */
+/*   Updated: 2023/03/15 18:12:55 by hwang         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ void	init_colour(t_colour *colour)
 void	init_texture(t_cube *cube, t_texture *textures)
 {
 	textures->count = 0;
-	textures->no_tex = NULL;
-	textures->so_tex = NULL;
-	textures->we_tex = NULL;
-	textures->ea_tex = NULL;
+	textures->no_tex = (mlx_texture_t *)malloc(sizeof(mlx_texture_t));
+	textures->so_tex = (mlx_texture_t *)malloc(sizeof(mlx_texture_t));
+	textures->we_tex = (mlx_texture_t *)malloc(sizeof(mlx_texture_t));
+	textures->ea_tex = (mlx_texture_t *)malloc(sizeof(mlx_texture_t));
 	textures->ceiling = (t_colour *)malloc(sizeof(t_colour));
 	if (!textures->ceiling)
 		put_error(cube, "Failed to initialize the ceiling colour!\n");
