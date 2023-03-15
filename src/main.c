@@ -6,7 +6,7 @@
 /*   By: cyuzbas <cyuzbas@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/27 13:04:11 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/15 15:46:41 by hwang         ########   odam.nl         */
+/*   Updated: 2023/03/15 16:08:37 by hwang         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 #include <memory.h>
 #include "../lib/MLX42/include/MLX42/MLX42.h"
-#include "cub3d.h"
+#include "../inc/cub3d.h"
 
 void hook(void* param)
 {

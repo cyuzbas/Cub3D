@@ -6,7 +6,7 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 16:56:18 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/15 15:24:59 by hwang         ########   odam.nl         */
+/*   Updated: 2023/03/15 16:05:16 by hwang         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ void	find_start(t_map *map)
 			{
 				map->start_pos->x = j;
 				map->start_pos->y = i;
+				printf("start x is: %d\n", map->start_pos->x = j);
+				printf("start y is: %d\n", map->start_pos->y = i);
 				return ;
 			}
 			j++;
