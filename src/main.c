@@ -22,7 +22,7 @@
 
 #include <memory.h>
 #include "../lib/MLX42/include/MLX42/MLX42.h"
-#include "cub3d.h"
+#include "../inc/cub3d.h"
 
 void hook(void* param)
 {
