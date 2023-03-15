@@ -6,7 +6,7 @@
 /*   By: cyuzbas <cyuzbas@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 16:03:43 by cyuzbas       #+#    #+#                 */
-/*   Updated: 2023/03/13 15:23:04 by cyuzbas       ########   odam.nl         */
+/*   Updated: 2023/03/15 15:44:07 by hwang         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,10 @@ The pattern/texture of the walls in four direction
 typedef struct s_texture
 {
 	int		count;
-	// t_img	no_tex;
-	// t_img	so_tex;
-	// t_img	we_tex;
-	// t_img	ea_tex;
-	char	*no_tex;
-	char	*so_tex;
-	char	*we_tex;
-	char	*ea_tex;
+	mlx_texture_t	*no_tex;
+	mlx_texture_t	*so_tex;
+	mlx_texture_t	*we_tex;
+	mlx_texture_t	*ea_tex;
 	t_colour *floor;
 	t_colour *ceiling;
 } t_texture;
@@ -132,18 +128,23 @@ typedef struct s_cube
 /****Parse****/
 int	parse_file(t_cube *cube, char *file);
 int	skip_all_space(char *line, int i);
-int parse_wall(t_cube *cube, char *tex, char *line, int i);
+int parse_wall(t_cube *cube, mlx_texture_t *tex, char *line, int i);
 int parse_colour(t_cube *cube, t_colour *colour, char *line, int i);
 
 int		get_raw_map( t_cube *cube, char *line);
 int		get_map_data(t_cube *cube);
-void	put_error(t_cube *cube, char *str);
+int		check_map(t_cube *cube);
 
 /****Parse****/
 char	*get_next_line(int fd);
 char	*ft_strjoin2(char *s1, char *s2);
 
+/****Init****/
 int	init_cube(t_cube *cube);
+
+/****Clean****/
+void	free_double_array(char **array);
+void	put_error(t_cube *cube, char *str);
 
 
 /****Drawing****/

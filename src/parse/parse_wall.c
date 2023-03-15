@@ -6,7 +6,7 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 15:22:30 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/12 20:03:16 by hwang         ########   odam.nl         */
+/*   Updated: 2023/03/15 15:17:29 by hwang         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,28 @@ char	*get_path(char *line, int i, int path_len)
 }
 
 /*
+Get img from path
+*/
+void	get_texture(t_cube *cube, mlx_texture_t *tex, char *path)
+{
+	int	len;
+	int	fd;
+
+	len = ft_strlen(path);
+	if (ft_strcmp(&path[len - 4], ".png") != 0)
+		put_error(cube, "Invalid texture file fomat!\n");
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+		put_error(cube, "Failed to open texture file!\n");
+	tex = mlx_load_png(path);
+	if (!tex)
+		put_error(cube, "Failed to read texture file!\n");
+}
+
+/*
 Currently just get the path to the texture!
 */
-int	parse_wall(t_cube *cube, char *tex, char *line, int i)
+int	parse_wall(t_cube *cube, mlx_texture_t *tex, char *line, int i)
 {
 	char	*path;
 	int		path_len;
@@ -49,8 +68,8 @@ int	parse_wall(t_cube *cube, char *tex, char *line, int i)
 	path = get_path(line, i, path_len);
 	if (!path)
 		put_error(cube, "Failed to get wall texture path!\n");
-	tex = path; //to be modified.
-	printf("wall path is: %s\n", tex);
+	printf("wall path is: %s\n", path);
+	get_texture(cube, tex, path);
 	(cube->textures->count)++;
 	return (0);
 }
