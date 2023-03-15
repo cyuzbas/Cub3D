@@ -21,6 +21,7 @@ BUILD_DIR = build/
 BUILD_SUBDIRS = build/parse
 
 UNPREFIXED_SRC	= main.c\
+				utils.c\
 				parse/parse.c\
 				parse/parse_wall.c\
 				parse/parse_colour.c\

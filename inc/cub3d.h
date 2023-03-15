@@ -147,7 +147,7 @@ typedef struct s_cube
 /****Parse****/
 int	parse_file(t_cube *cube, char *file);
 int	skip_all_space(char *line, int i);
-int parse_wall(t_cube *cube, mlx_texture_t *tex, char *line, int i);
+int	parse_wall(t_cube *cube, t_texture *texture, char *line, int i, char *wall_dir);
 int parse_colour(t_cube *cube, t_colour *colour, char *line, int i);
 
 int		get_raw_map( t_cube *cube, char *line);

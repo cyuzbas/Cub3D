@@ -6,7 +6,7 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/26 11:45:10 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/15 15:23:19 by hwang         ########   odam.nl         */
+/*   Updated: 2023/03/15 20:34:56 by hwang         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ int	get_map_info(t_cube *cube, char *line)
 	i = 0;
 	i = skip_all_space(line, i);
 	if (line[i] == 'N' && line[i + 1] == 'O')
-		return (parse_wall(cube, cube->textures->no_tex, line, i));
+		return (parse_wall(cube, cube->textures, line, i, "NO"));
 	else if (line[i] == 'S' && line[i + 1] == 'O')
-		return (parse_wall(cube, cube->textures->so_tex, line, i));
+		return (parse_wall(cube, cube->textures, line, i, "SO"));
 	else if (line[i] == 'W' && line[i + 1] == 'E')
-		return (parse_wall(cube, cube->textures->we_tex, line, i));
+		return (parse_wall(cube, cube->textures, line, i, "WE"));
 	else if (line[i] == 'E' && line[i + 1] == 'A')
-		return (parse_wall(cube, cube->textures->ea_tex, line, i));
+		return (parse_wall(cube, cube->textures, line, i, "EA"));
 	else if (line[i] == 'F')
 		parse_colour(cube, cube->textures->floor, line, i);
 	else if (line[i] == 'C')

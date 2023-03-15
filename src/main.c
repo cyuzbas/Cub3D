@@ -29,8 +29,8 @@ void hook(void* param)
 	t_cube* vars = param;
 	mlx_t* mlx = vars->mlx;
 
-	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(mlx);
+// 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
+// 		mlx_close_window(mlx);
 
 	// ft_memset(vars->img->pixels,  0, vars->img->width * vars->img->height * sizeof(int));
 	// // free(vars->img);
@@ -124,7 +124,9 @@ void	dda_alg(t_cube *data, t_calculation *ca)
 			ca->map_y += ca->step_y;
 			data->p.side = 1 + (1 + ca->step_y);
 		}
-		if (data->map->map_data[ca->map_y][ca->map_x] == '1')
+		// printf("mapy %d, mapx%d\n", ca->map_y, ca->map_x);
+		// ca->hit = 1;
+	 if (data->map->map_data[ca->map_y][ca->map_x] == '1')
 			ca->hit = 1;
 	}
 }
@@ -182,8 +184,9 @@ double	len_find(t_cube *data, double angle)
 {
 	t_calculation	cal;
 
-	cal.map_y = 5;
-	cal.map_x = 5;
+	// printf("%d %d \n",data->map->start_pos->x, data->map->start_pos->y);
+	cal.map_y = data->map->start_pos->y;
+	cal.map_x = data->map->start_pos->x;
 	cal.ray_x = cos(angle);
 	cal.ray_y = sin(angle);
 	cal.delta_x = fabs(1 / cal.ray_x);
@@ -191,6 +194,7 @@ double	len_find(t_cube *data, double angle)
 	cal.delta_y = fabs(1 / cal.ray_y);
 	find_ray(&cal, data);
 	dda_alg(data, &cal);
+	// printf("%f \n", angle);
 	return (find_distance(data, &cal, angle));
 }
 
@@ -201,29 +205,61 @@ void	draw_3d_map(t_cube *data)
 
 	i = -0.3;
 	a = 0;
+	// printf("ray len %f\n",data->p.r);
+
 	while (i < 0.3)
 	{
 		data->p.ray = len_find(data, data->p.pa + i);
-		printf("ray len %f\n",data->p.ray);
-		// walls(data, a);
+		// printf("ray len %f\n",data->p.ray);
+		
+		walls(data, a);
 		i += 0.0006;
 		a++;
 	}
 	mlx_image_to_window(data->mlx, data->img, 0, 0);
 }
 
+void	check_direction(t_cube *vars, t_position *m)
+{
+
+	// if (vars->map->map_data[m->x][m->y] == 'S')
+	// 	vars->p.pa = 0.5 * M_PI;
+	// if (vars->map->map_data[m->x][m->y] == 'W')
+	// 	vars->p.pa = 1.0 * M_PI;
+	// if (vars->map->map_data[m->x][m->y] == 'N')
+	// 	vars->p.pa = 1.5 * M_PI;
+	// if (vars->map->map_data[m->x][m->y] == 'E')
+	// 	vars->p.pa = 2.0 * M_PI;
+	// vars->p.px = (m->x * r) + r / 2; 
+	// vars->p.py = (m->y * r) + r / 2; 
+	// vars->p.pdx = lround((cos(vars->p.pa)) * 5);
+	// vars->p.pdy = lround((sin(vars->p.pa)) * 5);
+}
+
 int	init_draw(t_cube *cube)
 {
 	int	r;
 
-	cube->map->ratio = 64;
+	cube->map->ratio = 50;
 	r = cube->map->ratio;
 	cube->width = cube->map->col * cube->map->ratio;
 	cube->height =  cube->map->row * cube->map->ratio;
+	printf("x=%d, y=%d\n", cube->width, cube->height);
+	// check_direction(cube, cube->map->start_pos);
+	// printf("%d %d \n",cube->map->start_pos->x, cube->map->start_pos->y);
+	cube->p.x =(double)cube->map->start_pos->x;
+	cube->p.y = (double)cube->map->start_pos->y;
+	printf("%f %f \n",cube->p.x, cube->p.y);
+
+	cube->p.pa = 1.5 * M_PI; 
 	cube->mlx = mlx_init(cube->width, cube->height, "CUB3D", false);
 	if (!(cube->mlx))
 		exit(EXIT_FAILURE);
 	cube->img = mlx_new_image(cube->mlx, cube->width, cube->height);
+	cube->p.x += 0.5;
+	cube->p.y += 0.5;
+	printf("new  %f %f \n",cube->p.x, cube->p.y);
+
 	// draw_2D_map(cube, r, 0);
 	draw_3d_map(cube);
 	mlx_loop_hook(cube->mlx, &hook, cube);
@@ -258,6 +294,7 @@ int	main(int argc, char **argv)
 		put_error(cube, "Failed to initialize the game!\n");
 	if (parse_file(cube, argv[1]))
 		put_error(cube, "Failed to parse map file!\n");
+	printf("texture ptr befor init draw is: %d\n", cube->textures->no_tex->pixels[2]);
 	if (init_draw(cube))
 		put_error(cube, "Failed to draw the game!\n");
 	return (0);
