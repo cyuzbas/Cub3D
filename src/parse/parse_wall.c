@@ -6,7 +6,7 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 15:22:30 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/15 15:13:13 by hwang         ########   odam.nl         */
+/*   Updated: 2023/03/15 15:17:29 by hwang         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ Get img from path
 */
 void	get_texture(t_cube *cube, mlx_texture_t *tex, char *path)
 {
-	int len;
-	int fd;
+	int	len;
+	int	fd;
 
 	len = ft_strlen(path);
 	if (ft_strcmp(&path[len - 4], ".png") != 0)
@@ -49,6 +49,7 @@ void	get_texture(t_cube *cube, mlx_texture_t *tex, char *path)
 	if (!tex)
 		put_error(cube, "Failed to read texture file!\n");
 }
+
 /*
 Currently just get the path to the texture!
 */

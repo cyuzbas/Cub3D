@@ -6,7 +6,7 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 16:56:18 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/13 16:33:00 by hwang         ########   odam.nl         */
+/*   Updated: 2023/03/15 15:24:59 by hwang         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ int	check_closed(t_cube *cube, char **map, int x, int y)
 		j = 0;
 		while (j < cube->map->col)
 		{
-			if (i == 0 || i == cube->map->col - 1 || j == 0 || j == cube->map->col - 1)
+			if (i == 0 || i == cube->map->col - 1 || \
+				j == 0 || j == cube->map->col - 1)
 			{
 				if (map[i][j] == '0')
 					return (1);
@@ -86,7 +87,8 @@ Get the x and y of the starting position!
 int	check_map(t_cube *cube)
 {
 	find_start(cube->map);
-	if (check_closed(cube, cube->map->map_data, cube->map->start_pos->x, cube->map->start_pos->y))
+	if (check_closed(cube, cube->map->map_data, cube->map->start_pos->x, \
+		cube->map->start_pos->y))
 		put_error(cube, "Unclosed map\n");
 	return (0);
 }

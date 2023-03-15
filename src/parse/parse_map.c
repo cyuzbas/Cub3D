@@ -6,7 +6,7 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 15:40:10 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/15 14:10:35 by hwang         ########   odam.nl         */
+/*   Updated: 2023/03/15 15:23:30 by hwang         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	map_line_check(char *line, t_cube *cube)
 	{
 		if (line[i] == ' ' || line[i] == '0' || line[i] == '1')
 			i++;
-		if (line[i] == 'N' || line[i] == 'S' || line[i] == 'W' || line[i] == 'E')
+		if (line[i] == 'N' || line[i] == 'S' || line[i] == 'W' || \
+			line[i] == 'E')
 		{
 			if (cube->map->start_pos->dir != 0)
 				put_error(cube, "Duplicate starting point!\n");
@@ -63,6 +64,15 @@ int	get_raw_map( t_cube *cube, char *line)
 	return (0);
 }
 
+/*
+To print the map for check before free:
+	i = 0;
+	while (i < cube->map->row)
+	{
+		printf("%s\n", cube->map->map_data[i]);
+		i++;
+	}
+*/
 int	get_map_data(t_cube *cube)
 {
 	char	**temp;
@@ -95,14 +105,7 @@ int	get_map_data(t_cube *cube)
 		i++;
 	}
 	map[i] = 0;
-	i = 0;
 	free_double_array(temp);
 	cube->map->map_data = map;
-	// i = 0;
-	// while (i < cube->map->row)
-	// {
-	// 	printf("%s\n", cube->map->map_data[i]);
-	// 	i++;
-	// }
 	return (0);
 }

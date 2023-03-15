@@ -6,7 +6,7 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/26 11:45:10 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/15 14:10:43 by hwang         ########   odam.nl         */
+/*   Updated: 2023/03/15 15:23:19 by hwang         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	skip_all_space(char *line, int i)
 {
-	while (line[i] == ' ' || line[i] == '\t' || line[i] == '\v' || line[i] == '\f' || line[i] == '\r')
+	while (line[i] == ' ' || line[i] == '\t' || line[i] == '\v' || \
+		line[i] == '\f' || line[i] == '\r')
 		i++;
 	return (i);
 }
@@ -51,11 +52,18 @@ int	get_map_info(t_cube *cube, char *line)
 		else
 			return (-1);
 	}
-	return 0;
+	return (0);
 }
 
 /*
 Get all info from the file, textures and map
+To print the map for check:
+	int i = 0;
+	while (i < cube->map->row)
+	{
+		printf("%s\n", cube->map->map_data[i]);
+		i++;
+	}
 */
 int	parse_file(t_cube *cube, char *file)
 {
@@ -85,12 +93,6 @@ int	parse_file(t_cube *cube, char *file)
 		put_error(cube, "Start point not found in map!\n");
 	if (get_map_data(cube))
 		put_error(cube, "Failed to generate map!\n");
-	int i = 0;
-	while (i < cube->map->row)
-	{
-		printf("%s\n", cube->map->map_data[i]);
-		i++;
-	}
 	if (check_map(cube))
 		return (1);
 	return (0);
