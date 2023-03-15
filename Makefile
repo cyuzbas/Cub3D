@@ -6,7 +6,11 @@
 #    By: cyuzbas <cyuzbas@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/26 15:00:38 by cyuzbas       #+#    #+#                  #
+
 #    Updated: 2023/03/15 15:38:04 by cyuzbas       ########   odam.nl          #
+
+#    Updated: 2023/03/15 15:47:18 by hwang         ########   odam.nl          #
+
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,9 +25,10 @@ UNPREFIXED_SRC	= main.c\
 				parse/parse_wall.c\
 				parse/parse_colour.c\
 				parse/parse_map.c\
-				parse/parse_utils.c\
+				parse/check_map.c\
 				parse/get_next_line.c\
 				parse/init_cube.c\
+				parse/clean_cube.c\
 				
 OBJS = $(addprefix $(BUILD_DIR), $(UNPREFIXED_SRC:.c=.o))
 SRCS = $(addprefix $(SRC_DIR), $(UNPREFIXED_SRC))
