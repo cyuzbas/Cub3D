@@ -6,7 +6,7 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 14:42:51 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/13 16:34:05 by hwang         ########   odam.nl         */
+/*   Updated: 2023/03/15 14:14:23 by hwang         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,5 @@ void	put_error(t_cube *cube, char *str)
 	if (str)
 		ft_putstr_fd(str, 2);
 	clean_cube(cube);
-	return ;
+	exit(EXIT_FAILURE);
 }

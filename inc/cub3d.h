@@ -30,14 +30,10 @@ The pattern/texture of the walls in four direction
 typedef struct s_texture
 {
 	int		count;
-	// t_img	no_tex;
-	// t_img	so_tex;
-	// t_img	we_tex;
-	// t_img	ea_tex;
-	char	*no_tex;
-	char	*so_tex;
-	char	*we_tex;
-	char	*ea_tex;
+	mlx_texture_t	*no_tex;
+	mlx_texture_t	*so_tex;
+	mlx_texture_t	*we_tex;
+	mlx_texture_t	*ea_tex;
 	t_colour *floor;
 	t_colour *ceiling;
 } t_texture;
@@ -82,7 +78,7 @@ typedef struct s_cube
 /****Parse****/
 int	parse_file(t_cube *cube, char *file);
 int	skip_all_space(char *line, int i);
-int parse_wall(t_cube *cube, char *tex, char *line, int i);
+int parse_wall(t_cube *cube, mlx_texture_t *tex, char *line, int i);
 int parse_colour(t_cube *cube, t_colour *colour, char *line, int i);
 
 int		get_raw_map( t_cube *cube, char *line);

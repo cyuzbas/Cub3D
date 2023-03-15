@@ -6,7 +6,7 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/27 13:04:11 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/13 12:46:46 by cyuzbas       ########   odam.nl         */
+/*   Updated: 2023/03/15 13:57:48 by hwang         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ int	main(int argc, char **argv)
 
 	arg_check(argc, argv);
 	cube = (t_cube *)malloc(sizeof(t_cube));
+	if (!cube)
+		put_error(cube, "Failed to initialize the game!\n");
 	if (init_cube(cube))
 		put_error(cube, "Failed to initialize the game!\n");
 	if (parse_file(cube, argv[1]))

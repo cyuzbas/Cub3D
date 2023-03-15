@@ -6,7 +6,7 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/26 11:45:10 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/13 15:51:41 by hwang         ########   odam.nl         */
+/*   Updated: 2023/03/15 14:10:43 by hwang         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ int	parse_file(t_cube *cube, char *file)
 		put_error(cube, "Map not found in map file!\n");
 	if (cube->map->start_pos->dir == 0)
 		put_error(cube, "Start point not found in map!\n");
-	get_map_data(cube);
+	if (get_map_data(cube))
+		put_error(cube, "Failed to generate map!\n");
 	int i = 0;
 	while (i < cube->map->row)
 	{

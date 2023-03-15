@@ -2,14 +2,14 @@ F 234,0,255
 C 255,255,255
 
 
-NO    ./textures/n.png
-WE  ./textures/w.png
-EA  ./textures/e.png
-SO  ./textures/s.png
+NO    ./texture_files/n.png
+WE  ./texture_files/w.png
+EA  ./texture_files/e.png
+SO  ./texture_files/s.png
 
    11111111111111111111
    10000000100000000001
-10110000000100000001111
+11110000000100000001111
 1000000000N000000001
 10000000000000000001
 10000000000000000001

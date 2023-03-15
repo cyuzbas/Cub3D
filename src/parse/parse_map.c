@@ -6,7 +6,7 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 15:40:10 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/13 15:52:59 by hwang         ########   odam.nl         */
+/*   Updated: 2023/03/15 14:10:35 by hwang         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,14 @@ int	get_map_data(t_cube *cube)
 
 	temp = ft_split(cube->map->raw_map, '\n');
 	map = malloc(sizeof(char *) * (cube->map->row + 1));
+	if (!map)
+		return (1);
 	i = 0;
 	while (temp[i])
 	{
 		map[i] = malloc(sizeof(char) * (cube->map->col + 1));
+		if (!map[i])
+			return (1);
 		j = 0;
 		while (temp[i][j])
 		{

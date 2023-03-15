@@ -6,7 +6,7 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/12 20:01:29 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/13 15:34:31 by hwang         ########   odam.nl         */
+/*   Updated: 2023/03/15 14:02:19 by hwang         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	init_colour(t_colour *colour)
 	colour->b = 0;
 }
 
-void	init_texture(t_texture *textures)
+void	init_texture(t_cube *cube, t_texture *textures)
 {
 	textures->count = 0;
 	textures->no_tex = NULL;
@@ -28,18 +28,24 @@ void	init_texture(t_texture *textures)
 	textures->we_tex = NULL;
 	textures->ea_tex = NULL;
 	textures->ceiling = (t_colour *)malloc(sizeof(t_colour));
+	if (!textures->ceiling)
+		put_error(cube, "Failed to initialize the ceiling colour!\n");
 	init_colour(textures->ceiling);
 	textures->floor = (t_colour *)malloc(sizeof(t_colour));
+	if (!textures->floor)
+		put_error(cube, "Failed to initialize the floor colour!\n");
 	init_colour(textures->floor);
 }
 
-void	init_map(t_map *map)
+void	init_map(t_cube *cube, t_map *map)
 {
 	map->raw_map = NULL;
 	map->map_data = NULL;
 	map->row = 0;
 	map->col = 0;
 	map->start_pos = (t_position *)malloc(sizeof(t_position));
+	if (!map->start_pos)
+		put_error(cube, "Failed to initialize the start position!\n");
 	map->start_pos->x = -1;
 	map->start_pos->y = -1;
 	map->start_pos->dir = 0;
@@ -48,8 +54,12 @@ void	init_map(t_map *map)
 int	init_cube(t_cube *cube)
 {
 	cube->map = (t_map *)malloc(sizeof(t_map));
-	init_map(cube->map);
+	if (!cube->map)
+		put_error(cube, "Failed to initialize the map!\n");
+	init_map(cube, cube->map);
 	cube->textures = (t_texture *)malloc(sizeof(t_texture));
-	init_texture(cube->textures);
+	if (!cube->textures)
+		put_error(cube, "Failed to initialize the texture!\n");
+	init_texture(cube, cube->textures);
 	return (0);
 }
