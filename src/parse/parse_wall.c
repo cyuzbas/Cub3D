@@ -6,7 +6,7 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 15:22:30 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/15 15:17:29 by hwang         ########   odam.nl         */
+/*   Updated: 2023/03/15 19:00:30 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ void	get_texture(t_cube *cube, mlx_texture_t *tex, char *path)
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		put_error(cube, "Failed to open texture file!\n");
-	tex = mlx_load_png(path);
+	printf("path when getting tex is: %s\n", path);
+	tex = mlx_load_png(path); 
 	if (!tex)
 		put_error(cube, "Failed to read texture file!\n");
 }
@@ -58,8 +59,8 @@ int	parse_wall(t_cube *cube, mlx_texture_t *tex, char *line, int i)
 	char	*path;
 	int		path_len;
 
-	if (tex != NULL)
-		put_error(cube, "Duplicate wall texture!\n");
+	// if (tex != NULL)
+	// 	put_error(cube, "Duplicate wall texture!\n");
 	i += 2;
 	i = skip_all_space(line, i);
 	path_len = 0;
@@ -69,6 +70,9 @@ int	parse_wall(t_cube *cube, mlx_texture_t *tex, char *line, int i)
 	if (!path)
 		put_error(cube, "Failed to get wall texture path!\n");
 	printf("wall path is: %s\n", path);
+	// tex = (mlx_texture_t *)malloc(sizeof(mlx_texture_t));
+	// if (!tex)
+	// 	put_error(cube, "Failed to malloc wall texture!\n");
 	get_texture(cube, tex, path);
 	(cube->textures->count)++;
 	return (0);
