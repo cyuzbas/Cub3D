@@ -6,7 +6,11 @@
 /*   By: cyuzbas <cyuzbas@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 16:03:43 by cyuzbas       #+#    #+#                 */
+
+/*   Updated: 2023/03/15 15:35:38 by cyuzbas       ########   odam.nl         */
+
 /*   Updated: 2023/03/15 15:44:07 by hwang         ########   odam.nl         */
+
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,39 +26,55 @@
 #include <fcntl.h>
 #include <errno.h>
 
+typedef enum e_side
+{
+	EAST = 0,
+	SOUTH = 1,
+	WEST = 2,
+	NORTH =3
+}	t_side;
+
+typedef struct s_calculation
+{
+	int			map_x;
+	int			map_y;
+	int			step_x;
+	int			step_y;
+	double		ray_x;
+	double		ray_y;
+	double		delta_x;
+	double		delta_y;
+	double		side_x;
+	double		side_y;
+	int			hit;
+}				t_calculation;
+
+/*
+Player position, angle, delta, and amount
+of ray will be drawn between -30/30 degrees
+*/
 typedef struct s_player
 {
-	double	px;			//player position
-	double	py;
-	double	pa; 		//player angle
-	double	pdx;		//player delta 
-	double	pdy;
-	int		ray[60];	//ray between -30/30 degrees
+	double	x;
+	double	y;
+	double	pa;
+	// double	pdx;
+	// double	pdy;
+	
+	int			x_view_direction;
+	int			y_view_direction;
+	double		game_speed;
+	double		x_camera;
+	double		y_camera;
+	double	ray;
+	t_side		side_enum;
+	double		hitpos;
+	int			hit_x;
+	int			hit_y;
+	int			side;
+	double		wall_x;
+
 }			t_player;
-
-
-// typedef struct s_map
-// {
-// 	int		ratio;
-// 	int		line;
-// 	int		len;
-// 	char	**maps;
-
-// 	int		mx;			//current map position
-// 	int		my;
-// }			t_map;
-
-// typedef struct s_vars
-// {
-// 	mlx_image_t*	img;
-// 	mlx_t*			mlx;
-// 	t_player		p;
-// 	t_map			map;
-// 	int				width;
-// 	int				height;
-// }			t_vars;
-
-
 
 
 /*
@@ -84,7 +104,6 @@ typedef struct s_texture
 
 /*
 The start position and direction
-DO I NEED TO SAVE THE START POSITION??
 */
 typedef struct s_position
 {
@@ -148,9 +167,9 @@ void	put_error(t_cube *cube, char *str);
 
 
 /****Drawing****/
-void draw_2D_map(t_cube *vars, int r, int flag);
-void draw_player(t_cube	*vars);
-void draw_direction(t_cube *vars, double angle, int size);
-
-
+// void draw_2D_map(t_cube *vars, int r, int flag);
+// void draw_player(t_cube	*vars);
+// void draw_direction(t_cube *vars, double angle, int size);
+void	draw_3d_map(t_cube *data);
+void	walls(t_cube *data, int i);
 #endif
