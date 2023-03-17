@@ -6,11 +6,7 @@
 #    By: cyuzbas <cyuzbas@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/26 15:00:38 by cyuzbas       #+#    #+#                  #
-
-#    Updated: 2023/03/15 15:38:04 by cyuzbas       ########   odam.nl          #
-
-#    Updated: 2023/03/15 15:47:18 by hwang         ########   odam.nl          #
-
+#    Updated: 2023/03/17 19:11:21 by cyuzbas       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,10 +14,12 @@ NAME	= cub3d
 
 SRC_DIR = src/
 BUILD_DIR = build/
-BUILD_SUBDIRS = build/parse
+BUILD_SUBDIRS = build/parse build/game
 
 UNPREFIXED_SRC	= main.c\
-				utils.c\
+				hook.c\
+				draw_map.c\
+				draw_utils.c\
 				parse/parse.c\
 				parse/parse_wall.c\
 				parse/parse_colour.c\
