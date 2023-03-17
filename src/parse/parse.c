@@ -6,7 +6,7 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/26 11:45:10 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/17 16:55:09 by cyuzbas       ########   odam.nl         */
+/*   Updated: 2023/03/17 16:57:31 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ int	get_map_info(t_cube *cube, char *line)
 
 	i = skip_all_space(line, 0);
 	if (line[i] == 'N' && line[i + 1] == 'O')
-		return (parse_wall(cube, cube->textures, line, i, "NO"));
+		return (parse_wall(cube, line, i, "NO"));
 	else if (line[i] == 'S' && line[i + 1] == 'O')
-		return (parse_wall(cube, cube->textures, line, i, "SO"));
+		return (parse_wall(cube, line, i, "SO"));
 	else if (line[i] == 'W' && line[i + 1] == 'E')
-		return (parse_wall(cube, cube->textures, line, i, "WE"));
+		return (parse_wall(cube, line, i, "WE"));
 	else if (line[i] == 'E' && line[i + 1] == 'A')
-		return (parse_wall(cube, cube->textures, line, i, "EA"));
+		return (parse_wall(cube, line, i, "EA"));
 	else if (line[i] == 'F')
 		parse_colour(cube, cube->textures->floor, line, i);
 	else if (line[i] == 'C')
@@ -55,6 +55,19 @@ int	get_map_info(t_cube *cube, char *line)
 	else
 		return (check_nl(line[i]));
 	return (0);
+}
+
+void	check_file_info(t_cube *cube)
+{
+	if (cube->textures->count != 6)
+		put_error(cube, "Map file info is not complete!\n");
+	if (cube->map->raw_map == NULL)
+		put_error(cube, "Map not found in map file!\n");
+	if (cube->map->start_pos->dir == 0)
+		put_error(cube, "Start point not found in map!\n");
+	if (get_map_data(cube))
+		put_error(cube, "Failed to generate map!\n");
+	return ;
 }
 
 /*
@@ -87,14 +100,7 @@ int	parse_file(t_cube *cube, char *file)
 		free(line);
 	}
 	close(fd);
-	if (cube->textures->count != 6)
-		put_error(cube, "Map file info is not complete!\n");
-	if (cube->map->raw_map == NULL)
-		put_error(cube, "Map not found in map file!\n");
-	if (cube->map->start_pos->dir == 0)
-		put_error(cube, "Start point not found in map!\n");
-	if (get_map_data(cube))
-		put_error(cube, "Failed to generate map!\n");
+	check_file_info(cube);
 	if (check_map(cube))
 		return (1);
 	return (0);
