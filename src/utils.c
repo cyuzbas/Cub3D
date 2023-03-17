@@ -6,7 +6,7 @@
 /*   By: cyuzbas <cyuzbas@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 16:31:23 by cyuzbas       #+#    #+#                 */
-/*   Updated: 2023/03/15 20:33:50 by hwang         ########   odam.nl         */
+/*   Updated: 2023/03/17 14:38:32 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,7 @@ void	draw_ceiling_and_floor(t_cube *data, int i)
 void	fill_info(t_draw_info *info, t_cube *data, double height)
 {
 	info->tex = data->textures->no_tex;
-	// info->tex = mlx_load_png("./texture_files/n.png");
-	// printf("north text var%d\n", info->tex->pixels[2]);
+
 	if (height >= data->img->height)
 	{
 		info->top = 0;
@@ -79,7 +78,6 @@ void	fill_info(t_draw_info *info, t_cube *data, double height)
 		info->bottom = (data->img->height + height) / 2;
 		info->text_start = 0.0;
 	}
-	// printf("tex-height%d\n", info->tex->height);
 	info->step = 1.0 * info->tex->height / height;
 }
 

@@ -6,7 +6,7 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 15:22:30 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/15 20:37:12 by hwang         ########   odam.nl         */
+/*   Updated: 2023/03/17 14:34:39 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,13 @@ int	parse_wall(t_cube *cube, t_texture *texture, char *line, int i, char *wall)
 	if (!path)
 		put_error(cube, "Failed to get wall texture path!\n");
 	check_texture(cube, path);
-	if (ft_strcmp(wall, "NO"))
+	if (!ft_strcmp(wall, "NO"))
 		texture->no_tex = mlx_load_png(path);
-	if (ft_strcmp(wall, "SO"))
+	if (!ft_strcmp(wall, "SO"))
 		texture->so_tex = mlx_load_png(path); 
-	if (ft_strcmp(wall, "WE"))
+	if (!ft_strcmp(wall, "WE"))
 		texture->we_tex = mlx_load_png(path); 
-	if (ft_strcmp(wall, "EA"))
+	if (!ft_strcmp(wall, "EA"))
 		texture->ea_tex = mlx_load_png(path); 
 	(cube->textures->count)++;
 	return (0);

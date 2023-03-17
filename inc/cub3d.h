@@ -167,9 +167,6 @@ void	put_error(t_cube *cube, char *str);
 
 
 /****Drawing****/
-// void draw_2D_map(t_cube *vars, int r, int flag);
-// void draw_player(t_cube	*vars);
-// void draw_direction(t_cube *vars, double angle, int size);
 void	draw_3d_map(t_cube *data);
 void	walls(t_cube *data, int i);
 #endif
