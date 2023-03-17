@@ -6,7 +6,7 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 18:23:45 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/12 20:10:01 by hwang         ########   odam.nl         */
+/*   Updated: 2023/03/17 16:46:42 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,12 @@ int	parse_colour(t_cube *cube, t_colour *colour, char *line, int i)
 	colour->r = ft_atoi(rgb[0]);
 	colour->g = ft_atoi(rgb[1]);
 	colour->b = ft_atoi(rgb[2]);
+	printf("r=%d, g=%d, b=%d, a=%d\n", colour->r, colour->g, colour->b, colour->a);
 	if (colour->r > 255 || colour->g > 255 || colour->b > 255)
 		put_error(cube, "Wrong rgb colour value for floor/ceiling!\n");
-	colour->rgb = (colour->r << 16 | colour->g << 8 | colour->b);
+	colour->rgb = (colour->r << 24 | colour->g << 16 | colour->b << 8 | colour->a);
+	printf("rgb=%d\n", colour->rgb);
+	
 	free(rgb[0]);
 	free(rgb[1]);
 	free(rgb[2]);

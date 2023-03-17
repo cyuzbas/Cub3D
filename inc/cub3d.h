@@ -86,6 +86,7 @@ typedef struct s_colour
 	int r;
 	int g;
 	int b;
+	int a;
 } t_colour;
 
 /*
@@ -138,7 +139,6 @@ typedef struct s_cube
 	mlx_image_t		*img;
 	mlx_t			*mlx;
 	t_player		p;
-	// t_map			map;
 	int				width;
 	int				height;
 

@@ -6,7 +6,7 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/12 20:01:29 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/15 20:14:15 by hwang         ########   odam.nl         */
+/*   Updated: 2023/03/17 16:42:02 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,10 @@
 void	init_colour(t_colour *colour)
 {
 	colour->rgb = 0;
-	colour->r = 0;
-	colour->g = 0;
-	colour->b = 0;
+	colour->r = -1;
+	colour->g = -1;
+	colour->b = -1;
+	colour->a = 255;
 }
 
 void	init_texture(t_cube *cube, t_texture *textures)
