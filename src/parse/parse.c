@@ -6,7 +6,7 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/26 11:45:10 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/17 16:50:12 by cyuzbas       ########   odam.nl         */
+/*   Updated: 2023/03/17 16:55:09 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,19 @@ int	skip_all_space(char *line, int i)
 	return (i);
 }
 
+int	check_nl(char c)
+{
+	if (c == '\n')
+		return (0);
+	else
+		return (-1);
+}
+
 int	get_map_info(t_cube *cube, char *line)
 {
 	int	i;
 
-	i = 0;
-	i = skip_all_space(line, i);
+	i = skip_all_space(line, 0);
 	if (line[i] == 'N' && line[i + 1] == 'O')
 		return (parse_wall(cube, cube->textures, line, i, "NO"));
 	else if (line[i] == 'S' && line[i + 1] == 'O')
@@ -46,12 +53,7 @@ int	get_map_info(t_cube *cube, char *line)
 		return (-1);
 	}
 	else
-	{
-		if (line[i] == '\n')
-			return (0);
-		else
-			return (-1);
-	}
+		return (check_nl(line[i]));
 	return (0);
 }
 

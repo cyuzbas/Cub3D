@@ -6,7 +6,7 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/12 20:01:29 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/17 16:42:02 by cyuzbas       ########   odam.nl         */
+/*   Updated: 2023/03/17 16:54:56 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void	init_texture(t_cube *cube, t_texture *textures)
 	textures->so_tex = (mlx_texture_t *)malloc(sizeof(mlx_texture_t));
 	textures->we_tex = (mlx_texture_t *)malloc(sizeof(mlx_texture_t));
 	textures->ea_tex = (mlx_texture_t *)malloc(sizeof(mlx_texture_t));
-	if (!textures->no_tex || !textures->so_tex || !textures->we_tex || !textures->ea_tex)
+	if (!textures->no_tex || !textures->so_tex || \
+		!textures->we_tex || !textures->ea_tex)
 		put_error(cube, "Failed to initialize the wall texture!\n");
 	textures->ceiling = (t_colour *)malloc(sizeof(t_colour));
 	if (!textures->ceiling)

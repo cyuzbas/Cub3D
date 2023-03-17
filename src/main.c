@@ -330,7 +330,6 @@ int	main(int argc, char **argv)
 		put_error(cube, "Failed to initialize the game!\n");
 	if (parse_file(cube, argv[1]))
 		put_error(cube, "Failed to parse map file!\n");
-	printf("texture ptr befor init draw is: %d\n", cube->textures->no_tex->pixels[2]);
 	if (init_draw(cube))
 		put_error(cube, "Failed to draw the game!\n");
 	return (0);

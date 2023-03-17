@@ -6,7 +6,7 @@
 /*   By: cyuzbas <cyuzbas@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 16:11:03 by cyuzbas       #+#    #+#                 */
-/*   Updated: 2023/03/15 13:08:17 by cyuzbas       ########   odam.nl         */
+/*   Updated: 2023/03/17 14:29:48 by hwang         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -422,4 +422,4 @@ int	main(int argc, char **argv)
 	return (0);
 }
 
-	// printf("x=%d, y=%d\n", cube->map->start_pos->x, cube->map->start_pos->y);
+// printf("x=%d, y=%d\n", cube->map->start_pos->x, cube->map->start_pos->y);
