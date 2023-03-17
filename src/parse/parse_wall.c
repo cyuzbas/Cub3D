@@ -6,7 +6,7 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 15:22:30 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/17 14:34:39 by cyuzbas       ########   odam.nl         */
+/*   Updated: 2023/03/17 16:09:29 by hwang         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	check_texture(t_cube *cube, char *path)
 /*
 Currently just get the path to the texture!
 */
-int	parse_wall(t_cube *cube, t_texture *texture, char *line, int i, char *wall)
+int	parse_wall(t_cube *cube, char *line, int i, char *wall)
 {
 	char	*path;
 	int		path_len;
@@ -66,13 +66,13 @@ int	parse_wall(t_cube *cube, t_texture *texture, char *line, int i, char *wall)
 		put_error(cube, "Failed to get wall texture path!\n");
 	check_texture(cube, path);
 	if (!ft_strcmp(wall, "NO"))
-		texture->no_tex = mlx_load_png(path);
+		cube->textures->no_tex = mlx_load_png(path);
 	if (!ft_strcmp(wall, "SO"))
-		texture->so_tex = mlx_load_png(path); 
+		cube->textures->so_tex = mlx_load_png(path);
 	if (!ft_strcmp(wall, "WE"))
-		texture->we_tex = mlx_load_png(path); 
+		cube->textures->we_tex = mlx_load_png(path);
 	if (!ft_strcmp(wall, "EA"))
-		texture->ea_tex = mlx_load_png(path); 
+		cube->textures->ea_tex = mlx_load_png(path);
 	(cube->textures->count)++;
 	return (0);
 }

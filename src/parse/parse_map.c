@@ -6,7 +6,7 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 15:40:10 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/15 15:44:55 by hwang         ########   odam.nl         */
+/*   Updated: 2023/03/17 16:24:40 by hwang         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,7 @@ int	map_line_check(char *line, t_cube *cube)
 			if (cube->map->start_pos->dir != 0)
 				put_error(cube, "Duplicate starting point!\n");
 			else
-			{
-				cube->map->start_pos->dir = line[i];
-				i++;
-			}
+				cube->map->start_pos->dir = line[i++];
 		}
 	}
 	if (line[i] && line[i] != '\n')
@@ -64,6 +61,35 @@ int	get_raw_map( t_cube *cube, char *line)
 	return (0);
 }
 
+int	copy_map(char **temp, char **map, int col)
+{
+	int		i;
+	int		j;
+
+		i = 0;
+	while (temp[i])
+	{
+		map[i] = malloc(sizeof(char) * (col + 1));
+		if (!map[i])
+			return (1);
+		j = 0;
+		while (temp[i][j])
+		{
+			map[i][j] = temp[i][j];
+			j++;
+		}
+		while (j < col)
+		{
+			map[i][j] = ' ';
+			j++;
+		}
+		map[i][j] = '\0';
+		i++;
+	}
+	map[i] = 0;
+	return (0);
+}
+
 /*
 To print the map for check before free:
 	i = 0;
@@ -77,34 +103,13 @@ int	get_map_data(t_cube *cube)
 {
 	char	**temp;
 	char	**map;
-	int		i;
-	int		j;
 
 	temp = ft_split(cube->map->raw_map, '\n');
 	map = malloc(sizeof(char *) * (cube->map->row + 1));
 	if (!map)
 		return (1);
-	i = 0;
-	while (temp[i])
-	{
-		map[i] = malloc(sizeof(char) * (cube->map->col + 1));
-		if (!map[i])
-			return (1);
-		j = 0;
-		while (temp[i][j])
-		{
-			map[i][j] = temp[i][j];
-			j++;
-		}
-		while (j < cube->map->col)
-		{
-			map[i][j] = ' ';
-			j++;
-		}
-		map[i][j] = '\0';
-		i++;
-	}
-	map[i] = 0;
+	if (copy_map(temp, map, cube->map->col))
+		return (1);
 	free_double_array(temp);
 	cube->map->map_data = map;
 	return (0);

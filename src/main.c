@@ -24,87 +24,121 @@
 #include "../lib/MLX42/include/MLX42/MLX42.h"
 #include "../inc/cub3d.h"
 
+int	check_move(int x, int y, t_cube *data)
+{
+	if (data->map->col > x && data->map->row > y && x > 0 && y > 0)
+	{
+		if (data->map->map_data[y][x] == '1')
+			return (0);
+		return (1);
+	}
+	return (0);
+}
+
 void hook(void* param)
 {
 	t_cube* vars = param;
 	mlx_t* mlx = vars->mlx;
 
-// 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
-// 		mlx_close_window(mlx);
+	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
+		mlx_close_window(mlx);
 
 	// ft_memset(vars->img->pixels,  0, vars->img->width * vars->img->height * sizeof(int));
 	// // free(vars->img);
 	// // vars->img = mlx_new_image(vars->mlx, vars->width, vars->height);
 	
-	// if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
-	// {
-	// 	// printf("\n LEFT\n--------------------\n");
-	// 	// printf("before pa=%f, pdx=%f, pdy=%f\n", vars->p.pa, vars->p.pdx, vars->p.pdy);
-	// 	vars->p.pa -= 0.05 *  M_PI;
-	// 	if (vars->p.pa < 0)
-	// 		vars->p.pa += 2 * M_PI;
-	// 	vars->p.pdx = cos(vars->p.pa) * 5;
-	// 	vars->p.pdy = sin(vars->p.pa) * 5;
-	// 	// printf("after pa=%f, pdx=%f, pdy=%f\n", vars->p.pa, vars->p.pdx, vars->p.pdy);
+	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
+	{
+		// printf("\n LEFT\n--------------------\n");
+		// printf("before pa=%f, pdx=%f, pdy=%f\n", vars->p.pa, vars->p.pdx, vars->p.pdy);
+		vars->p.pa -= 0.05 *  M_PI;
+		if (vars->p.pa < 0)
+			vars->p.pa += 2 * M_PI;
+		// vars->p.pdx = cos(vars->p.pa) * 5;
+		vars->p.x_camera = cos(vars->p.pa) *  vars->p.game_speed;
+		vars->p.y_camera = sin(vars->p.pa) *  vars->p.game_speed;
+		// vars->p.pdy = sin(vars->p.pa) * 5;
+		printf("LEFT\n");
+
+		// printf("after pa=%f, pdx=%f, pdy=%f\n", vars->p.pa, vars->p.pdx, vars->p.pdy);
+	}
+	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
+	{
+		// printf("\n RIGHT\n--------------------\n");
+		// printf("before pa=%f, pdx=%f, pdy=%f\n", vars->p.pa, vars->p.pdx, vars->p.pdy);
+		vars->p.pa += 0.05 *  M_PI;
+		if (vars->p.pa > 2 * M_PI)
+			vars->p.pa -= 2 * M_PI;
+		vars->p.x_camera = cos(vars->p.pa) *  vars->p.game_speed;
+		vars->p.y_camera = sin(vars->p.pa) *  vars->p.game_speed;
+		// printf("after pa=%f, pdx=%f, pdy=%f\n", vars->p.pa, vars->p.pdx, vars->p.pdy);
+		printf("RIGHT\n");
 		
-	// }
-	// if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
-	// {
-	// 	// printf("\n RIGHT\n--------------------\n");
-	// 	// printf("before pa=%f, pdx=%f, pdy=%f\n", vars->p.pa, vars->p.pdx, vars->p.pdy);
-	// 	vars->p.pa += 0.05 *  M_PI;
-	// 	if (vars->p.pa > 2 * M_PI)
-	// 		vars->p.pa -= 2 * M_PI;
-	// 	vars->p.pdx = cos(vars->p.pa) * 5;
-	// 	vars->p.pdy = sin(vars->p.pa) * 5;
-	// 	// printf("after pa=%f, pdx=%f, pdy=%f\n", vars->p.pa, vars->p.pdx, vars->p.pdy);
+	}
+	if (mlx_is_key_down(mlx, MLX_KEY_UP) || mlx_is_key_down(mlx, MLX_KEY_W))
+	{
+		double	move_x;
+		double	move_y;
+
+		move_x = vars->p.x + vars->p.game_speed * cos(vars->p.pa);
+		move_y = vars->p.y + vars->p.game_speed * sin(vars->p.pa);
+		if (check_move(move_x, move_y, vars))
+		{
+			vars->p.x = move_x;
+			vars->p.y = move_y;
+		}
+			printf("UPP\n");
+			// printf("after pa=%f, pdx=%f, pdy=%f\n", vars->p.pa, vars->p.px, vars->p.py);
 		
-	// }
-	// if (mlx_is_key_down(mlx, MLX_KEY_UP))
-	// {
-	// 	// printf("\n UP\n--------------------\n");
-		
-	// 	// printf("before pa=%f, pdx=%f, pdy=%f\n", vars->p.pa, vars->p.px, vars->p.py);
-	// 	// vars->p.py -= vars->p.pdy;
-	// 	// vars->p.px -= vars->p.pdx;
-	// 	vars->p.py += vars->p.pdx;
-	// 	vars->p.px += vars->p.pdy;
-	// 	// printf("after pa=%f, pdx=%f, pdy=%f\n", vars->p.pa, vars->p.px, vars->p.py);
-		
-	// }
-	// if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
-	// {
-	// 	// printf("\n DOWN\n--------------------\n");
-		
-	// 	// printf("before pa=%f, pdx=%f, pdy=%f\n", vars->p.pa, vars->p.px, vars->p.py);
-	// 	// vars->p.py += vars->p.pdy;
-	// 	// vars->p.px += vars->p.pdx;
-	// 	vars->p.py -= vars->p.pdx;
-	// 	vars->p.px -= vars->p.pdy;
-	// 	// printf("after pa=%f, pdx=%f, pdy=%f\n", vars->p.pa, vars->p.px, vars->p.py);
-		
-	// }
-	// if (mlx_is_key_down(mlx, MLX_KEY_W))
-	// {
-	// 	vars->p.py += vars->p.pdx;
-	// 	vars->p.px += vars->p.pdy;
-	// }
-	// if (mlx_is_key_down(mlx, MLX_KEY_S))
-	// {
-	// 	vars->p.py -= vars->p.pdx;
-	// 	vars->p.px -= vars->p.pdy;
-	// }
-	// if (mlx_is_key_down(mlx, MLX_KEY_A))
-	// {
-	// 	vars->p.py -= vars->p.pdx;
-	// 	vars->p.px += vars->p.pdy;
-	// }
-	// if (mlx_is_key_down(mlx, MLX_KEY_D))
-	// {
-	// 	vars->p.py += vars->p.pdx;
-	// 	vars->p.px -= vars->p.pdy;
-	// }
+	}
+	if (mlx_is_key_down(mlx, MLX_KEY_DOWN) || mlx_is_key_down(mlx, MLX_KEY_S))
+	{
+		double	move_x;
+		double	move_y;
+
+		move_x = vars->p.x - vars->p.game_speed * cos(vars->p.pa);
+		move_y = vars->p.y - vars->p.game_speed * sin(vars->p.pa);
+		if (check_move(move_x, move_y, vars))
+		{
+			vars->p.x = move_x;
+			vars->p.y = move_y;
+		}
+			printf("DOWN\n");
+			// printf("after pa=%f, pdx=%f, pdy=%f\n", vars->p.pa, vars->p.px, vars->p.py);
+			
+	}
+	if (mlx_is_key_down(mlx, MLX_KEY_A))
+	{
+		double	move_x;
+		double	move_y;
+
+		move_x = vars->p.x + vars->p.game_speed
+			* cos(vars->p.pa - 0.5 * M_PI);
+		move_y = vars->p.y + vars->p.game_speed
+			* sin(vars->p.pa - 0.5 * M_PI);
+		if (check_move(move_x, move_y, vars))
+		{
+			vars->p.y = move_y;
+			vars->p.x = move_x;
+		}
+	}
+	if (mlx_is_key_down(mlx, MLX_KEY_D))
+	{
+		double	move_x;
+		double	move_y;
+
+		move_x = vars->p.x + vars->p.game_speed
+			* cos(vars->p.pa + 0.5 * M_PI);
+		move_y = vars->p.y + vars->p.game_speed
+			* sin(vars->p.pa + 0.5 * M_PI);
+		if (check_move(move_x, move_y, vars))
+		{
+			vars->p.y = move_y;
+			vars->p.x = move_x;
+		}
+	}
 	// draw_2D_map(vars, vars->map->ratio, 1);
+	draw_3d_map(vars);
 }
 
 
@@ -250,7 +284,7 @@ int	init_draw(t_cube *cube)
 	cube->p.x =(double)cube->map->start_pos->x;
 	cube->p.y = (double)cube->map->start_pos->y;
 	printf("%f %f \n",cube->p.x, cube->p.y);
-
+	cube->p.game_speed = 0.2;
 	cube->p.pa = 1.5 * M_PI; 
 	cube->mlx = mlx_init(cube->width, cube->height, "CUB3D", false);
 	if (!(cube->mlx))
@@ -258,6 +292,8 @@ int	init_draw(t_cube *cube)
 	cube->img = mlx_new_image(cube->mlx, cube->width, cube->height);
 	cube->p.x += 0.5;
 	cube->p.y += 0.5;
+	cube->p.x_camera = lround((cos(cube->p.pa)));
+	cube->p.y_camera = lround((sin(cube->p.pa)));
 	printf("new  %f %f \n",cube->p.x, cube->p.y);
 
 	// draw_2D_map(cube, r, 0);
