@@ -6,7 +6,7 @@
 /*   By: cyuzbas <cyuzbas@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/17 19:07:36 by cyuzbas       #+#    #+#                 */
-/*   Updated: 2023/03/18 17:19:58 by cyuzbas       ########   odam.nl         */
+/*   Updated: 2023/03/18 21:58:53 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,16 +68,11 @@ typedef struct s_player
 	double		x;
 	double		y;
 	double		pa;
-	int			x_view_direction;
-	int			y_view_direction;
 	double		game_speed;
 	double		x_camera;
 	double		y_camera;
 	double		ray;
 	t_side		side_enum;
-	double		hitpos;
-	int			hit_x;
-	int			hit_y;
 	int			side;
 	double		wall_x;
 

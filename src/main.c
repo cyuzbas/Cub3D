@@ -6,7 +6,7 @@
 /*   By: cyuzbas <cyuzbas@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 16:11:03 by cyuzbas       #+#    #+#                 */
-/*   Updated: 2023/03/18 17:21:44 by cyuzbas       ########   odam.nl         */
+/*   Updated: 2023/03/18 21:37:44 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,19 @@ void	init_direction(t_cube *c)
 
 int	init_draw(t_cube *cube)
 {
-	cube->map->ratio = 50;
+	// cube->map->ratio = 50;
 	cube->width = 1000;
 	cube->height = 1000;
-	cube->p.x = (double)cube->map->start_pos->x + 0.5;
-	cube->p.y = (double)cube->map->start_pos->y + 0.5;
-	cube->p.x_camera = lround((cos(cube->p.pa)));
-	cube->p.y_camera = lround((sin(cube->p.pa)));
-	cube->p.game_speed = 0.2;
-	init_direction(cube);
 	cube->mlx = mlx_init(cube->width, cube->height, "CUB3D", false);
 	if (!(cube->mlx))
 		exit(EXIT_FAILURE);
 	cube->img = mlx_new_image(cube->mlx, cube->width, cube->height);
+	cube->p.x = (double)cube->map->start_pos->x + 0.5;
+	cube->p.y = (double)cube->map->start_pos->y + 0.5;
+	cube->p.x_camera = (cos(cube->p.pa));
+	cube->p.y_camera = (sin(cube->p.pa));
+	cube->p.game_speed = 0.2;
+	init_direction(cube);
 	draw_3d_map(cube);
 	mlx_loop_hook(cube->mlx, &hook, cube);
 	mlx_loop(cube->mlx);

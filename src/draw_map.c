@@ -6,7 +6,7 @@
 /*   By: cyuzbas <cyuzbas@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/17 18:53:08 by cyuzbas       #+#    #+#                 */
-/*   Updated: 2023/03/18 17:38:32 by cyuzbas       ########   odam.nl         */
+/*   Updated: 2023/03/18 21:52:42 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ double	len_find(t_cube *data, double angle)
 {
 	t_calculation	cal;
 
-	cal.map_y = data->map->start_pos->y;
-	cal.map_x = data->map->start_pos->x;
+	cal.map_y = (int)data->p.y;
+	cal.map_x = (int)data->p.x;
 	cal.ray_x = cos(angle);
 	cal.ray_y = sin(angle);
 	cal.hit = 0;
