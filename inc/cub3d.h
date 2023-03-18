@@ -6,7 +6,7 @@
 /*   By: cyuzbas <cyuzbas@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/17 19:07:36 by cyuzbas       #+#    #+#                 */
-/*   Updated: 2023/03/17 19:10:34 by cyuzbas       ########   odam.nl         */
+/*   Updated: 2023/03/18 17:19:58 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,12 @@
 # include <fcntl.h>
 # include <errno.h>
 
-# define KEY_LEFT	263
-# define KEY_RIGHT	262
-
 typedef enum e_side
 {
 	EAST = 0,
 	SOUTH = 1,
 	WEST = 2,
-	NORTH =3
+	NORTH = 3
 }	t_side;
 
 typedef struct s_draw_info
@@ -44,6 +41,9 @@ typedef struct s_draw_info
 	double			text_start;
 }					t_draw_info;
 
+/*
+To calculate ray length according to DDA algorithm
+*/
 typedef struct s_calculation
 {
 	int			map_x;

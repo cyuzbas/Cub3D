@@ -6,7 +6,7 @@
 /*   By: cyuzbas <cyuzbas@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/17 18:53:08 by cyuzbas       #+#    #+#                 */
-/*   Updated: 2023/03/17 19:04:21 by cyuzbas       ########   odam.nl         */
+/*   Updated: 2023/03/18 17:38:32 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	find_ray(t_calculation *cal, t_cube *data)
 	}
 }
 
-double	find_distance(t_cube *data, t_calculation *cal, double angle)
+double	perp_distance(t_cube *data, t_calculation *cal, double angle)
 {
 	double	distance;
 	double	ca;
@@ -90,12 +90,18 @@ double	len_find(t_cube *data, double angle)
 	cal.map_x = data->map->start_pos->x;
 	cal.ray_x = cos(angle);
 	cal.ray_y = sin(angle);
-	cal.delta_x = fabs(1 / cal.ray_x);
 	cal.hit = 0;
-	cal.delta_y = fabs(1 / cal.ray_y);
+	if (cal.ray_x == 0)
+		cal.ray_x = 1e30;
+	else
+		cal.delta_x = fabs(1 / cal.ray_x);
+	if (cal.ray_y == 0)
+		cal.ray_y = 1e30;
+	else
+		cal.delta_y = fabs(1 / cal.ray_y);
 	find_ray(&cal, data);
 	dda_alg(data, &cal);
-	return (find_distance(data, &cal, angle));
+	return (perp_distance(data, &cal, angle));
 }
 
 void	draw_3d_map(t_cube *data)
