@@ -6,7 +6,7 @@
 /*   By: cyuzbas <cyuzbas@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 16:31:23 by cyuzbas       #+#    #+#                 */
-/*   Updated: 2023/03/17 19:05:12 by cyuzbas       ########   odam.nl         */
+/*   Updated: 2023/03/19 12:32:30 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	hook(void *param)
 	t_cube	*vars;
 	mlx_t	*mlx;
 
-	vars = param;
+	vars = (t_cube *)(param);
 	mlx = vars->mlx;
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(mlx);
