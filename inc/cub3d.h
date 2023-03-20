@@ -6,7 +6,7 @@
 /*   By: cyuzbas <cyuzbas@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/17 19:07:36 by cyuzbas       #+#    #+#                 */
-/*   Updated: 2023/03/20 15:27:02 by hwang         ########   odam.nl         */
+/*   Updated: 2023/03/20 15:34:35 by hwang         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,7 @@ typedef struct s_cube
 	t_minimap		mini;
 	int				width;
 	int				height;
+	float			direction[2];
 }				t_cube;
 
 /****Parse****/
@@ -189,6 +190,5 @@ void	draw_3d_map(t_cube *data);
 void	walls(t_cube *data, int i);
 void	hook(void *param);
 void	draw_minimap(t_cube *cube, mlx_image_t *img);
-void	draw_2D_map(t_cube *vars, int flag);
 
 #endif

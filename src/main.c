@@ -6,7 +6,7 @@
 /*   By: cyuzbas <cyuzbas@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 16:11:03 by cyuzbas       #+#    #+#                 */
-/*   Updated: 2023/03/20 15:29:06 by hwang         ########   odam.nl         */
+/*   Updated: 2023/03/20 15:34:52 by hwang         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ void	init_minimap(t_cube *cube)
 {
 	int		map_size;
 
-	cube->mini.player_size = 3;
+	cube->mini.player_size = 4;
 	cube->mini.draw_minimap = 1;
-	if(cube->map->col > cube->map->row)
+	if (cube->map->col > cube->map->row)
 		map_size = cube->map->col;
 	else
 		map_size = cube->map->row;
@@ -47,7 +47,6 @@ void	init_minimap(t_cube *cube)
 	}
 	cube->mini.block_size[0] = map_size;
 	cube->mini.block_size[1] = map_size;
-	
 }
 
 int	init_draw(t_cube *cube)
