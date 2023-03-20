@@ -6,7 +6,7 @@
 #    By: cyuzbas <cyuzbas@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/26 15:00:38 by cyuzbas       #+#    #+#                  #
-#    Updated: 2023/03/20 14:37:32 by hwang         ########   odam.nl          #
+#    Updated: 2023/03/20 15:30:33 by hwang         ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,12 +14,13 @@ NAME	= cub3d
 
 SRC_DIR = src/
 BUILD_DIR = build/
-BUILD_SUBDIRS = build/parse build/game
+BUILD_SUBDIRS = build/parse
 
 UNPREFIXED_SRC	= main.c\
 				hook.c\
 				draw_map.c\
 				draw_utils.c\
+				minimap.c\
 				parse/parse.c\
 				parse/parse_wall.c\
 				parse/parse_colour.c\
@@ -32,8 +33,7 @@ UNPREFIXED_SRC	= main.c\
 OBJS = $(addprefix $(BUILD_DIR), $(UNPREFIXED_SRC:.c=.o))
 SRCS = $(addprefix $(SRC_DIR), $(UNPREFIXED_SRC))
 
-# CFLAGS	= -Wextra -Wall -Werror
-CFLAGS	= -Wextra -Wall -Werror -Wunreachable-code #-fsanitize=address
+CFLAGS	= -Wextra -Wall -Werror -Wunreachable-code
 LIBMLX	= ./lib/MLX42
 LIBFT	= ./lib/libft
 

@@ -6,7 +6,7 @@
 /*   By: cyuzbas <cyuzbas@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/17 18:53:08 by cyuzbas       #+#    #+#                 */
-/*   Updated: 2023/03/18 21:52:42 by cyuzbas       ########   odam.nl         */
+/*   Updated: 2023/03/19 22:09:48 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ double	len_find(t_cube *data, double angle)
 
 	cal.map_y = (int)data->p.y;
 	cal.map_x = (int)data->p.x;
+
 	cal.ray_x = cos(angle);
 	cal.ray_y = sin(angle);
 	cal.hit = 0;
@@ -118,5 +119,6 @@ void	draw_3d_map(t_cube *data)
 		i += 0.0006;
 		a++;
 	}
+	draw_minimap(data, data->img);
 	mlx_image_to_window(data->mlx, data->img, 0, 0);
 }

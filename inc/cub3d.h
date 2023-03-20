@@ -6,7 +6,7 @@
 /*   By: cyuzbas <cyuzbas@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/17 19:07:36 by cyuzbas       #+#    #+#                 */
-/*   Updated: 2023/03/20 14:58:31 by hwang         ########   odam.nl         */
+/*   Updated: 2023/03/20 15:27:02 by hwang         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@
 # include <fcntl.h>
 # include <errno.h>
 
+# define GREY			0X808080FF
+# define RED			0XFF0000FF
+# define WHITE			0XFFFFFFFF
+# define BLACK			0X000000FF
+
 typedef enum e_side
 {
 	EAST = 0,
@@ -30,6 +35,13 @@ typedef enum e_side
 	WEST = 2,
 	NORTH = 3
 }	t_side;
+
+typedef enum s_objects
+{
+	EMPTY = 0,
+	FLOOR = 1,
+	WALL = 2
+}	t_objects;
 
 typedef struct s_draw_info
 {
@@ -127,6 +139,13 @@ typedef struct s_map
 	int			col;
 }			t_map;
 
+typedef struct s_minimap
+{
+	int	player_size;
+	int	block_size[2];
+	int	draw_minimap;
+}				t_minimap;
+
 /*
 The struct of everything
 */
@@ -137,6 +156,7 @@ typedef struct s_cube
 	mlx_image_t		*img;
 	mlx_t			*mlx;
 	t_player		p;
+	t_minimap		mini;
 	int				width;
 	int				height;
 }				t_cube;
@@ -168,4 +188,7 @@ void	put_error(t_cube *cube, char *str);
 void	draw_3d_map(t_cube *data);
 void	walls(t_cube *data, int i);
 void	hook(void *param);
+void	draw_minimap(t_cube *cube, mlx_image_t *img);
+void	draw_2D_map(t_cube *vars, int flag);
+
 #endif

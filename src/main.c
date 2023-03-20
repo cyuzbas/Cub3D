@@ -6,27 +6,52 @@
 /*   By: cyuzbas <cyuzbas@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 16:11:03 by cyuzbas       #+#    #+#                 */
-/*   Updated: 2023/03/20 15:25:20 by hwang         ########   odam.nl         */
+/*   Updated: 2023/03/20 15:29:06 by hwang         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-void	init_direction(t_cube *c)
+void	init_player(t_cube *cube)
 {
-	if (c->map->start_pos->dir == 'N')
-		c->p.pa = 1.5 * M_PI;
-	if (c->map->start_pos->dir == 'W')
-		c->p.pa = 1.0 * M_PI;
-	if (c->map->start_pos->dir == 'S')
-		c->p.pa = 0.5 * M_PI;
-	if (c->map->start_pos->dir == 'E')
-		c->p.pa = 2.0 * M_PI;
+	cube->p.x = (double)cube->map->start_pos->x + 0.5;
+	cube->p.y = (double)cube->map->start_pos->y + 0.5;
+	cube->p.x_camera = (cos(cube->p.pa));
+	cube->p.y_camera = (sin(cube->p.pa));
+	cube->p.game_speed = 0.2;
+	if (cube->map->start_pos->dir == 'N')
+		cube->p.pa = 1.5 * M_PI;
+	if (cube->map->start_pos->dir == 'W')
+		cube->p.pa = 1.0 * M_PI;
+	if (cube->map->start_pos->dir == 'S')
+		cube->p.pa = 0.5 * M_PI;
+	if (cube->map->start_pos->dir == 'E')
+		cube->p.pa = 2.0 * M_PI;
+}
+
+void	init_minimap(t_cube *cube)
+{
+	int		map_size;
+
+	cube->mini.player_size = 3;
+	cube->mini.draw_minimap = 1;
+	if(cube->map->col > cube->map->row)
+		map_size = cube->map->col;
+	else
+		map_size = cube->map->row;
+	map_size = (int)(300 / map_size);
+	if (map_size < 10)
+	{
+		cube->mini.draw_minimap = 0;
+		map_size = 10;
+	}
+	cube->mini.block_size[0] = map_size;
+	cube->mini.block_size[1] = map_size;
+	
 }
 
 int	init_draw(t_cube *cube)
 {
-	// cube->map->ratio = 50;
 	cube->width = 1000;
 	cube->height = 1000;
 	cube->mlx = mlx_init(cube->width, cube->height, "CUB3D", false);
@@ -35,14 +60,10 @@ int	init_draw(t_cube *cube)
 	cube->img = mlx_new_image(cube->mlx, cube->width, cube->height);
 	if (!(cube->img))
 		exit(EXIT_FAILURE);
-	cube->p.x = (double)cube->map->start_pos->x + 0.5;
-	cube->p.y = (double)cube->map->start_pos->y + 0.5;
-	cube->p.x_camera = (cos(cube->p.pa));
-	cube->p.y_camera = (sin(cube->p.pa));
-	cube->p.game_speed = 0.2;
-	init_direction(cube);
-	draw_3d_map(cube);
+	init_player(cube);
+	init_minimap(cube);
 	mlx_loop_hook(cube->mlx, &hook, cube);
+	draw_3d_map(cube);
 	mlx_loop(cube->mlx);
 	mlx_delete_image(cube->mlx, cube->img);
 	mlx_terminate(cube->mlx);
