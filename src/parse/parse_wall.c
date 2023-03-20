@@ -6,7 +6,7 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 15:22:30 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/17 16:09:29 by hwang         ########   odam.nl         */
+/*   Updated: 2023/03/20 14:39:33 by hwang         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int	parse_wall(t_cube *cube, char *line, int i, char *wall)
 		cube->textures->we_tex = mlx_load_png(path);
 	if (!ft_strcmp(wall, "EA"))
 		cube->textures->ea_tex = mlx_load_png(path);
+	free(path);
 	(cube->textures->count)++;
 	return (0);
 }

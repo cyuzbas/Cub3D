@@ -6,11 +6,31 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 15:40:10 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/17 16:24:40 by hwang         ########   odam.nl         */
+/*   Updated: 2023/03/20 15:00:12 by hwang         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
+
+int	map_char_check(char *line, int i, t_cube *cube)
+{
+	if (line[i] == ' ' || line[i] == '0' || line[i] == '1')
+		i++;
+	else if (line[i] == 'N' || line[i] == 'S' || line[i] == 'W' || \
+		line[i] == 'E')
+	{
+		if (cube->map->start_pos->dir != 0)
+			put_error(cube, "Duplicate starting point!\n");
+		else
+		{
+			cube->map->start_pos->dir = line[i];
+			i++;
+		}
+	}
+	else
+		put_error(cube, "Invalid character on map!\n");
+	return (i);
+}
 
 /*
 valid:	"     10000000N000001"
@@ -23,18 +43,7 @@ int	map_line_check(char *line, t_cube *cube)
 
 	i = 0;
 	while (line[i] && line[i] != '\n')
-	{
-		if (line[i] == ' ' || line[i] == '0' || line[i] == '1')
-			i++;
-		if (line[i] == 'N' || line[i] == 'S' || line[i] == 'W' || \
-			line[i] == 'E')
-		{
-			if (cube->map->start_pos->dir != 0)
-				put_error(cube, "Duplicate starting point!\n");
-			else
-				cube->map->start_pos->dir = line[i++];
-		}
-	}
+		i = map_char_check(line, i, cube);
 	if (line[i] && line[i] != '\n')
 		return (-1);
 	while (line[i - 1] == ' ')

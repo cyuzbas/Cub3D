@@ -6,7 +6,7 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 16:56:18 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/15 16:05:16 by hwang         ########   odam.nl         */
+/*   Updated: 2023/03/20 15:05:30 by hwang         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,19 @@ int	check_closed(t_cube *cube, char **map, int x, int y)
 	return (0);
 }
 
+/*
+printf("col is: %d\n", map->col);
+printf("row is: %d\n", map->row);
+printf("start pos is: %c\n", map->start_pos->dir);
+printf("start x is: %d\n", map->start_pos->x = j);
+printf("start y is: %d\n", map->start_pos->y = i);
+*/
 void	find_start(t_map *map)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	printf("col is: %d\n", map->col);
-	printf("row is: %d\n", map->row);
-	printf("start pos is: %c\n", map->start_pos->dir);
 	while (i < map->row)
 	{
 		j = 0;
@@ -72,8 +76,6 @@ void	find_start(t_map *map)
 			{
 				map->start_pos->x = j;
 				map->start_pos->y = i;
-				printf("start x is: %d\n", map->start_pos->x = j);
-				printf("start y is: %d\n", map->start_pos->y = i);
 				return ;
 			}
 			j++;

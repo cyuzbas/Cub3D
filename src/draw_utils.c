@@ -1,33 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   utils.c                                            :+:    :+:            */
+/*   draw_utils.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: cyuzbas <cyuzbas@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 16:31:23 by cyuzbas       #+#    #+#                 */
-/*   Updated: 2023/03/17 16:49:55 by cyuzbas       ########   odam.nl         */
+/*   Updated: 2023/03/18 17:47:54 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include "../lib/libft/libft.h"
-#include <stdlib.h>
-#include <math.h>
-
-#include <memory.h>
-#include "../lib/MLX42/include/MLX42/MLX42.h"
 #include "cub3d.h"
-
-typedef struct s_draw_info
-{
-	int				top;
-	int				bottom;
-	unsigned int	color;
-	double			step;
-	mlx_texture_t	*tex;
-	double			text_start;
-}					t_draw_info;
 
 static int	get_rgba(mlx_texture_t *texture, int x, int y)
 {
@@ -62,14 +45,14 @@ void	draw_ceiling_and_floor(t_cube *data, int i)
 
 void	fill_texture(t_draw_info *info, t_cube *data)
 {
-	if (data->p.side == NORTH)
-		info->tex = data->textures->no_tex;
-	if (data->p.side == WEST)
+	if (data->p.side == 0)
 		info->tex = data->textures->we_tex;
-	if (data->p.side == SOUTH)
-		info->tex = data->textures->so_tex;
-	if (data->p.side == EAST)
+	if (data->p.side == 1)
+		info->tex = data->textures->no_tex;
+	if (data->p.side == 2)
 		info->tex = data->textures->ea_tex;
+	if (data->p.side == 3)
+		info->tex = data->textures->so_tex;
 }
 
 void	fill_info(t_draw_info *info, t_cube *data, double height)
@@ -91,16 +74,15 @@ void	fill_info(t_draw_info *info, t_cube *data, double height)
 	info->step = 1.0 * info->tex->height / height;
 }
 
-
 void	walls(t_cube *data, int i)
 {
-	double		height;
+	double		lineheight;
 	int			x;
 	t_draw_info	info;
 
-	height = data->height / data->p.ray;
+	lineheight = data->height / data->p.ray;
 	x = 0;
-	fill_info(&info, data, height);
+	fill_info(&info, data, lineheight);
 	draw_ceiling_and_floor(data, i);
 	while (x < info.bottom - info.top)
 	{

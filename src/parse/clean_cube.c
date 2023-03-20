@@ -6,7 +6,7 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/13 14:42:51 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/17 17:05:18 by hwang         ########   odam.nl         */
+/*   Updated: 2023/03/20 15:19:43 by hwang         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ void	clean_map(t_map *map)
 void	clean_textures(t_texture *texture)
 {
 	if (texture->no_tex)
-		free(texture->no_tex);
+		mlx_delete_texture(texture->no_tex);
 	if (texture->so_tex)
-		free(texture->so_tex);
+		mlx_delete_texture(texture->so_tex);
 	if (texture->we_tex)
-		free(texture->we_tex);
+		mlx_delete_texture(texture->we_tex);
 	if (texture->ea_tex)
-		free(texture->ea_tex);
+		mlx_delete_texture(texture->ea_tex);
 	if (texture->ceiling)
 		free(texture->ceiling);
 	if (texture->floor)

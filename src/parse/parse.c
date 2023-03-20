@@ -6,7 +6,7 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/26 11:45:10 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/17 16:57:31 by cyuzbas       ########   odam.nl         */
+/*   Updated: 2023/03/20 14:05:12 by hwang         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,10 @@ int	get_map_info(t_cube *cube, char *line)
 
 void	check_file_info(t_cube *cube)
 {
-	if (cube->textures->count != 6)
+	if (cube->textures->count < 6)
 		put_error(cube, "Map file info is not complete!\n");
+	if (cube->textures->count > 6)
+		put_error(cube, "Duplicate texture/colour info in map file!\n");
 	if (cube->map->raw_map == NULL)
 		put_error(cube, "Map not found in map file!\n");
 	if (cube->map->start_pos->dir == 0)
