@@ -6,7 +6,7 @@
 /*   By: cyuzbas <cyuzbas@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 16:11:03 by cyuzbas       #+#    #+#                 */
-/*   Updated: 2023/03/20 17:49:40 by hwang         ########   odam.nl         */
+/*   Updated: 2023/03/20 18:55:08 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	arg_check(int argc, char **argv)
 	return (0);
 }
 
-int	main2(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_cube	*cube;
 

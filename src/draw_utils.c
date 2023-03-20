@@ -6,7 +6,7 @@
 /*   By: cyuzbas <cyuzbas@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 16:31:23 by cyuzbas       #+#    #+#                 */
-/*   Updated: 2023/03/18 17:47:54 by cyuzbas       ########   odam.nl         */
+/*   Updated: 2023/03/20 18:54:38 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ void	draw_ceiling_and_floor(t_cube *data, int i)
 
 void	fill_texture(t_draw_info *info, t_cube *data)
 {
-	if (data->p.side == 0)
-		info->tex = data->textures->we_tex;
-	if (data->p.side == 1)
-		info->tex = data->textures->no_tex;
-	if (data->p.side == 2)
+	if (data->p.side == EAST)
 		info->tex = data->textures->ea_tex;
-	if (data->p.side == 3)
+	if (data->p.side == SOUTH)
 		info->tex = data->textures->so_tex;
+	if (data->p.side == WEST)
+		info->tex = data->textures->we_tex;
+	if (data->p.side == NORTH)
+		info->tex = data->textures->no_tex;
 }
 
 void	fill_info(t_draw_info *info, t_cube *data, double height)
