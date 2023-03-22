@@ -6,7 +6,7 @@
 /*   By: cyuzbas <cyuzbas@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 16:31:23 by cyuzbas       #+#    #+#                 */
-/*   Updated: 2023/03/20 18:54:38 by cyuzbas       ########   odam.nl         */
+/*   Updated: 2023/03/22 12:38:28 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,7 @@ void	walls(t_cube *data, int i)
 	{
 		if (data->p.side == EAST || data->p.side == NORTH)
 			info.color = get_rgba(info.tex,
-					((unsigned int)((1.0 - data->p.wall_x)
-							* info.tex->width)),
+					((unsigned int)((1.0 - data->p.wall_x) * info.tex->width)),
 					((unsigned int)(info.text_start + x * info.step)));
 		else
 			info.color = get_rgba(info.tex,

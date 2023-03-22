@@ -6,12 +6,14 @@
 /*   By: cyuzbas <cyuzbas@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/17 18:53:08 by cyuzbas       #+#    #+#                 */
-/*   Updated: 2023/03/20 15:17:14 by cyuzbas       ########   odam.nl         */
+/*   Updated: 2023/03/22 12:29:37 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/* While collision does not happen, checking which ray is closer to line
+   Jump to next map square either in x-direction, or in y-direction */
 void	dda_alg(t_cube *data, t_calculation *ca)
 {
 	while (ca->hit == 0)
@@ -33,6 +35,8 @@ void	dda_alg(t_cube *data, t_calculation *ca)
 	}
 }
 
+/* Checking if ray_x looking left/right and ray_y down/up
+   To find outwhat direction to step in x or y-direction */
 void	find_ray(t_calculation *cal, t_cube *data)
 {
 	if (cal->ray_x < 0)
@@ -57,13 +61,14 @@ void	find_ray(t_calculation *cal, t_cube *data)
 	}
 }
 
+/* Calculate distance of perpendicular ray to avoid fisheye effect */
 double	perp_distance(t_cube *data, t_calculation *cal, double angle)
 {
 	double	distance;
 	double	ca;
 	double	perp_dist;
 
-	if (data->p.side == 0 || data->p.side == 2)
+	if (data->p.side == EAST || data->p.side == WEST)
 		distance = cal->side_x - cal->delta_x;
 	else
 		distance = cal->side_y - cal->delta_y;
@@ -91,14 +96,8 @@ double	len_find(t_cube *data, double angle)
 	cal.ray_x = cos(angle);
 	cal.ray_y = sin(angle);
 	cal.hit = 0;
-	if (cal.ray_x == 0)
-		cal.ray_x = 1e30;
-	else
-		cal.delta_x = fabs(1 / cal.ray_x);
-	if (cal.ray_y == 0)
-		cal.ray_y = 1e30;
-	else
-		cal.delta_y = fabs(1 / cal.ray_y);
+	cal.delta_x = fabs(1 / cal.ray_x);
+	cal.delta_y = fabs(1 / cal.ray_y);
 	find_ray(&cal, data);
 	dda_alg(data, &cal);
 	return (perp_distance(data, &cal, angle));
@@ -118,6 +117,7 @@ void	draw_3d_map(t_cube *data)
 		i += 0.0006;
 		a++;
 	}
-	draw_minimap(data, data->img);
+	if (data->mini.draw_minimap)
+		draw_minimap(data, data->img);
 	mlx_image_to_window(data->mlx, data->img, 0, 0);
 }

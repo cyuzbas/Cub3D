@@ -6,9 +6,14 @@
 #    By: cyuzbas <cyuzbas@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/26 15:00:38 by cyuzbas       #+#    #+#                  #
-#    Updated: 2023/03/20 15:35:16 by hwang         ########   odam.nl          #
+#    Updated: 2023/03/22 11:17:31 by cyuzbas       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
+
+RESET		=	"\033[0m"
+GREEN		=	"\033[0;32m"
+RED			=	"\033[0;31m"
+YELLOW		=	"\033[0;33m"
 
 NAME	= cub3d
 
@@ -58,12 +63,11 @@ $(BUILD_SUBDIRS):
 
 $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(HEADERS) -o $(NAME)
-
+	@echo $(GREEN)"Cub3d is ready to execute...! "$(RESET)
 
 $(BUILD_DIR)%.o: $(SRC_DIR)%.c | $(BUILD_DIR) $(BUILD_SUBDIRS)
-	@$(CC) $(FLAGS) -o $@ -c $< $(HEADERS) && printf "Compiling: $(notdir $<)"
-
-
+	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS)
+	@printf $(YELLOW)"%-33.33s\r"$(RESET) $@
 
 clean:
 	@rm -rdf $(BUILD_DIR)
@@ -73,10 +77,11 @@ clean:
 fclean: clean
 	@rm -rf $(NAME)
 	@$(MAKE) fclean -C $(LIBFT)/
+	@echo $(RED)"Cub3d deleted"$(RESET)
 
 re: clean all
 
 run: all 
-	./cub3d map_files/simple.cub
+	./cub3d map_files/normal.cub
 
-.PHONY: all, clean, fclean, re, libmlx, libft
+.PHONY: all, clean, fclean, re, libmlx, libft, run

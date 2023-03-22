@@ -6,7 +6,7 @@
 /*   By: cyuzbas <cyuzbas@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 16:11:03 by cyuzbas       #+#    #+#                 */
-/*   Updated: 2023/03/20 18:55:08 by cyuzbas       ########   odam.nl         */
+/*   Updated: 2023/03/22 11:52:47 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	init_player(t_cube *cube)
 	cube->p.y = (double)cube->map->start_pos->y + 0.5;
 	cube->p.x_camera = (cos(cube->p.pa));
 	cube->p.y_camera = (sin(cube->p.pa));
-	cube->p.game_speed = 0.2;
+	cube->p.game_speed = 0.3;
 	if (cube->map->start_pos->dir == 'N')
 		cube->p.pa = 1.5 * M_PI;
 	if (cube->map->start_pos->dir == 'W')
@@ -41,10 +41,7 @@ void	init_minimap(t_cube *cube)
 		map_size = cube->map->row;
 	map_size = (int)(300 / map_size);
 	if (map_size < 10)
-	{
-		cube->mini.draw_minimap = 0;
 		map_size = 10;
-	}
 	cube->mini.block_size[0] = map_size;
 	cube->mini.block_size[1] = map_size;
 }

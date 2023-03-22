@@ -6,7 +6,7 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 16:56:18 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/20 15:05:30 by hwang         ########   odam.nl         */
+/*   Updated: 2023/03/22 11:17:57 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	check_neighbour(char **map, int i, int j, char dir)
 	return (0);
 }
 
-int	check_closed(t_cube *cube, char **map, int x, int y)
+int	check_closed(t_cube *cube, char **map)
 {
 	int	i;
 	int	j;
@@ -91,8 +91,7 @@ Get the x and y of the starting position!
 int	check_map(t_cube *cube)
 {
 	find_start(cube->map);
-	if (check_closed(cube, cube->map->map_data, cube->map->start_pos->x, \
-		cube->map->start_pos->y))
+	if (check_closed(cube, cube->map->map_data))
 		put_error(cube, "Unclosed map\n");
 	return (0);
 }
