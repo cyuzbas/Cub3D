@@ -6,7 +6,7 @@
 #    By: cyuzbas <cyuzbas@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/26 15:00:38 by cyuzbas       #+#    #+#                  #
-#    Updated: 2023/03/22 11:17:31 by cyuzbas       ########   odam.nl          #
+#    Updated: 2023/03/22 20:26:12 by cyuzbas       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,6 @@ LIBFT	= ./lib/libft
 HEADERS	= -I ./inc -I $(LIBMLX)/include
 LIBS	= $(LIBMLX)/build/libmlx42.a -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit $(LIBFT)/libft.a
 # LIBS	= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm lib/libft/libft.a
-
 
 all: libmlx libft $(BUILD_DIR) $(NAME)
 

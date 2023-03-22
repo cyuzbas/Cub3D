@@ -6,7 +6,7 @@
 /*   By: cyuzbas <cyuzbas@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 16:11:03 by cyuzbas       #+#    #+#                 */
-/*   Updated: 2023/03/22 11:52:47 by cyuzbas       ########   odam.nl         */
+/*   Updated: 2023/03/22 20:17:59 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void	init_minimap(t_cube *cube)
 	map_size = (int)(300 / map_size);
 	if (map_size < 10)
 		map_size = 10;
+	if (map_size == 10 && (cube->map->col > 100 || cube->map->row > 100))
+		cube->mini.draw_minimap = 0;
 	cube->mini.block_size[0] = map_size;
 	cube->mini.block_size[1] = map_size;
 }
@@ -74,7 +76,9 @@ int	arg_check(int argc, char **argv)
 	if (argc != 2)
 		put_error(NULL, "Invalid number of arguments!\n");
 	filename_len = ft_strlen(argv[1]);
-	if (filename_len < 4)
+	if (filename_len < 5)
+		put_error(NULL, "Invalid file name!\n");
+	if (argv[1][filename_len - 5] && argv[1][filename_len - 5] == '/')
 		put_error(NULL, "Invalid file name!\n");
 	if (ft_strcmp(&argv[1][filename_len - 4], ".cub") != 0)
 		put_error(NULL, "Invalid map file extension!\n");

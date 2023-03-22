@@ -6,7 +6,7 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 16:56:18 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/22 11:17:57 by cyuzbas       ########   odam.nl         */
+/*   Updated: 2023/03/22 19:45:46 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	check_closed(t_cube *cube, char **map)
 		j = 0;
 		while (j < cube->map->col)
 		{
-			if (i == 0 || i == cube->map->col - 1 || \
+			if (i == 0 || i == cube->map->row - 1 || \
 				j == 0 || j == cube->map->col - 1)
 			{
 				if (map[i][j] == '0')

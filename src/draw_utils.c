@@ -6,7 +6,7 @@
 /*   By: cyuzbas <cyuzbas@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 16:31:23 by cyuzbas       #+#    #+#                 */
-/*   Updated: 2023/03/22 12:38:28 by cyuzbas       ########   odam.nl         */
+/*   Updated: 2023/03/22 17:31:37 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	draw_ceiling_and_floor(t_cube *data, int i)
 	half = (data->height - start) / 2;
 	while (start < data->height)
 	{
-		if (start > half)
+		if (start < half)
 			mlx_put_pixel(data->img, i, start, data->textures->ceiling->rgb);
 		else
 			mlx_put_pixel(data->img, i, start, data->textures->floor->rgb);

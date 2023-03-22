@@ -5,8 +5,8 @@ WE  ./texture_files/wall_2.png
 EA   		./texture_files/wall_3.png
 SO  ./texture_files/wall_4.png
 
-C 194,147,96
-F 116,150,220
+F 194,147,96
+C 116,150,220
 
          11111111111111111111111111111
          10000000001100000000000000001

@@ -6,24 +6,24 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 18:23:45 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/17 18:59:07 by cyuzbas       ########   odam.nl         */
+/*   Updated: 2023/03/22 19:59:40 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub3d.h"
 
-int	check_rgb_format(char *line, int i)
+int	skip_digit(char *line, int i)
 {
 	while (line[i] && ft_isdigit(line[i]))
 		i++;
-	if (line[i] && line[i] == ',')
-		i++;
-	else
-		return (-1);
+	return (i);
+}
+
+int	check_rgb_format(char *line, int i)
+{
 	if (ft_isdigit(line[i]))
 	{
-		while (line[i] && ft_isdigit(line[i]))
-			i++;
+		i = skip_digit(line, i);
 		if (line[i] && line[i] == ',')
 			i++;
 		else
@@ -31,9 +31,14 @@ int	check_rgb_format(char *line, int i)
 	}
 	if (ft_isdigit(line[i]))
 	{
-		while (line[i] && ft_isdigit(line[i]))
+		i = skip_digit(line, i);
+		if (line[i] && line[i] == ',')
 			i++;
+		else
+			return (-1);
 	}
+	if (ft_isdigit(line[i]))
+		i = skip_digit(line, i);
 	if (line[i] == '\n')
 		return (0);
 	else

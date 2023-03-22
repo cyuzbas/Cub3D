@@ -6,7 +6,7 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/02/26 11:45:10 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/20 14:05:12 by hwang         ########   odam.nl         */
+/*   Updated: 2023/03/22 19:49:09 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,17 @@ int	get_map_info(t_cube *cube, char *line)
 	int	i;
 
 	i = skip_all_space(line, 0);
-	if (line[i] == 'N' && line[i + 1] == 'O')
+	if (line[i] == 'N' && line[i + 1] == 'O' && cube->map->raw_map == NULL)
 		return (parse_wall(cube, line, i, "NO"));
-	else if (line[i] == 'S' && line[i + 1] == 'O')
+	else if (line[i] == 'S' && line[i + 1] == 'O' && cube->map->raw_map == NULL)
 		return (parse_wall(cube, line, i, "SO"));
-	else if (line[i] == 'W' && line[i + 1] == 'E')
+	else if (line[i] == 'W' && line[i + 1] == 'E' && cube->map->raw_map == NULL)
 		return (parse_wall(cube, line, i, "WE"));
-	else if (line[i] == 'E' && line[i + 1] == 'A')
+	else if (line[i] == 'E' && line[i + 1] == 'A' && cube->map->raw_map == NULL)
 		return (parse_wall(cube, line, i, "EA"));
-	else if (line[i] == 'F')
+	else if (line[i] == 'F' && cube->map->raw_map == NULL)
 		parse_colour(cube, cube->textures->floor, line, i);
-	else if (line[i] == 'C')
+	else if (line[i] == 'C' && cube->map->raw_map == NULL)
 		return (parse_colour(cube, cube->textures->ceiling, line, i));
 	else if (line[i] == '0' || line[i] == '1')
 		return (get_raw_map(cube, line));
