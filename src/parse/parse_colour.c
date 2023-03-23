@@ -6,7 +6,7 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 18:23:45 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/22 19:59:40 by cyuzbas       ########   odam.nl         */
+/*   Updated: 2023/03/23 18:43:05 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int	check_rgb_format(char *line, int i)
 	}
 	if (ft_isdigit(line[i]))
 		i = skip_digit(line, i);
+	else
+		return (-1);
 	if (line[i] == '\n')
 		return (0);
 	else

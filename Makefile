@@ -6,7 +6,7 @@
 #    By: cyuzbas <cyuzbas@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/26 15:00:38 by cyuzbas       #+#    #+#                  #
-#    Updated: 2023/03/22 20:26:12 by cyuzbas       ########   odam.nl          #
+#    Updated: 2023/03/23 12:36:13 by cyuzbas       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ GREEN		=	"\033[0;32m"
 RED			=	"\033[0;31m"
 YELLOW		=	"\033[0;33m"
 
-NAME	= cub3d
+NAME	= cub3D
 
 SRC_DIR = src/
 BUILD_DIR = build/
@@ -44,7 +44,6 @@ LIBFT	= ./lib/libft
 
 HEADERS	= -I ./inc -I $(LIBMLX)/include
 LIBS	= $(LIBMLX)/build/libmlx42.a -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit $(LIBFT)/libft.a
-# LIBS	= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm lib/libft/libft.a
 
 all: libmlx libft $(BUILD_DIR) $(NAME)
 

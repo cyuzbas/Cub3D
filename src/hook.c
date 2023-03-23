@@ -6,7 +6,7 @@
 /*   By: cyuzbas <cyuzbas@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/08 16:31:23 by cyuzbas       #+#    #+#                 */
-/*   Updated: 2023/03/20 15:29:53 by hwang         ########   odam.nl         */
+/*   Updated: 2023/03/23 18:41:23 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,13 @@ void	look_right_left(t_cube *vars)
 	mlx = vars->mlx;
 	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
 	{
-		vars->p.pa -= 0.05 * M_PI;
+		vars->p.pa -= 0.02 * M_PI;
 		if (vars->p.pa < 0)
 			vars->p.pa += 2 * M_PI;
 	}
 	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
 	{
-		vars->p.pa += 0.05 * M_PI;
+		vars->p.pa += 0.02 * M_PI;
 		if (vars->p.pa > 2 * M_PI)
 			vars->p.pa -= 2 * M_PI;
 	}
@@ -107,8 +107,11 @@ void	hook(void *param)
 		clean_cube(vars);
 		exit(EXIT_SUCCESS);
 	}
-	if (mlx_is_key_down(mlx, MLX_KEY_LEFT) || \
-		mlx_is_key_down(mlx, MLX_KEY_RIGHT))
+	mlx_delete_image(mlx, vars->img);
+	vars->img = mlx_new_image(mlx, vars->width, vars->height);
+	if (!(vars->img))
+		exit(EXIT_FAILURE);
+	if (mlx_is_key_down(mlx, LEFT) || mlx_is_key_down(mlx, RIGHT))
 		look_right_left(vars);
 	if (mlx_is_key_down(mlx, MLX_KEY_UP) || mlx_is_key_down(mlx, MLX_KEY_W) || \
 		mlx_is_key_down(mlx, MLX_KEY_DOWN) || mlx_is_key_down(mlx, MLX_KEY_S))

@@ -6,7 +6,7 @@
 /*   By: cyuzbas <cyuzbas@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/17 19:07:36 by cyuzbas       #+#    #+#                 */
-/*   Updated: 2023/03/20 15:34:35 by hwang         ########   odam.nl         */
+/*   Updated: 2023/03/23 13:55:25 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,13 @@
 # include <fcntl.h>
 # include <errno.h>
 
-# define GREY			0X808080FF
-# define RED			0XFF0000FF
-# define WHITE			0XFFFFFFFF
-# define BLACK			0X000000FF
+# define GREY	0X808080FF
+# define RED	0XFF0000FF
+# define WHITE	0XFFFFFFFF
+# define BLACK	0X000000FF
+
+# define RIGHT	262
+# define LEFT	263
 
 typedef enum e_side
 {

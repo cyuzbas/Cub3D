@@ -6,7 +6,7 @@
 /*   By: hwang <hwang@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 16:56:18 by hwang         #+#    #+#                 */
-/*   Updated: 2023/03/22 19:45:46 by cyuzbas       ########   odam.nl         */
+/*   Updated: 2023/03/23 18:42:14 by cyuzbas       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	check_closed(t_cube *cube, char **map)
 			if (i == 0 || i == cube->map->row - 1 || \
 				j == 0 || j == cube->map->col - 1)
 			{
-				if (map[i][j] == '0')
+				if (map[i][j] == '0' || ft_strchr("NSEW", map[i][j]))
 					return (1);
 			}
 			else
